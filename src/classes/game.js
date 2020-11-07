@@ -15,8 +15,11 @@ module.exports = class Game {
 
     // Recherche des joueurs dans le channel vocal
     this.voiceChannel.members.forEach((member) => {
-      this.players.push(new Player(member));
-      this.textChannel.send(`${member.displayName} enregistré`);
+      // Ne pas s'enregistrer soi
+      if (member.userID !== process.env.ADMIN_ID) {
+        this.players.push(new Player(member));
+        this.textChannel.send(`${member.displayName} enregistré`);
+      }
     });
   };
 
