@@ -9,6 +9,7 @@ module.exports = class Game {
     this.startedAt = new Date();
     this.questions = questions;
     this.activeQuestionIndex = 0;
+    this.openToAnswers = false;
   }
 
   /**
@@ -64,7 +65,13 @@ module.exports = class Game {
     // Affichage question
     console.log(`Question active : ${JSON.stringify(this.questions[this.activeQuestionIndex])}`);
 
+    // Ouvrir aux réponses
+    this.openToAnswers = true;
+
     // Temps pour répondre
+
+    // Fermer aux réponses
+    this.openToAnswers = false;
 
     // Affichage réponse
 

@@ -17,7 +17,7 @@ client.on('message', (message) => {
   if (message.author.id === process.env.ADMIN_ID) {
     // Si admin parle
     handleAdminResponse(message);
-  } else {
+  } else if (game?.openToAnswers) {
     // Si un random parle
     handlePlayerResponse(message);
   }
