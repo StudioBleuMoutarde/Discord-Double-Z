@@ -26,6 +26,7 @@ client.on('message', (message) => {
 // Confirmation de connexion
 client.on('ready', () => {
   console.log(`*** logged in as ${client.user.tag}`);
+  client.user.setActivity('Double-Z');
 
   // Recherche des références des channels "Plateau"
   client.channels.cache.forEach((chan) => {
