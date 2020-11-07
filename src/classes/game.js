@@ -4,6 +4,7 @@ const Player = require('./player');
 const questions = require('../data/questions.json');
 
 const questionTypes = require('../enums/question-types');
+const questionColors = require('../enums/question-colors');
 
 module.exports = class Game {
   constructor() {
@@ -92,6 +93,7 @@ module.exports = class Game {
   displayActiveQuestion() {
     const activeQuestion = this.questions[this.activeQuestionIndex];
     const embedQuestion = new Discord.MessageEmbed()
+      .setColor(questionColors[activeQuestion.type])
       .setAuthor(questionTypes[activeQuestion.type])
       .setTitle(activeQuestion.label)
       .setDescription(`Indice : ${activeQuestion.hint}`);
