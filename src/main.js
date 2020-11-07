@@ -14,12 +14,10 @@ client.on('message', (message) => {
   // Seulement les messages du channel text Plateau
   if (message.channel.type !== 'text' && !/plateau/i.test(message.channel.name)) return;
 
+  // Seulement les messages de l'admin
   if (message.author.id === process.env.ADMIN_ID) {
     // Si admin parle
     handleAdminResponse(message);
-  } else if (game?.openToAnswers) {
-    // Si un random parle
-    handlePlayerResponse(message);
   }
 });
 
@@ -59,19 +57,6 @@ const handleAdminResponse = (message) => {
     case '!start':
       game.start();
       break;
-    default:
-      console.log('/// Commande inconnue');
-      break;
-  }
-};
-
-/**
- * Gestion des messages des joueurs
- * @param {*} message 
- */
-const handlePlayerResponse = (message) => {
-  console.log(`Un joueur "${message.author.username}" a dit "${message.content}"`);
-  switch (message.content) {
     default:
       console.log('/// Commande inconnue');
       break;
