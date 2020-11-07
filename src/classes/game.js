@@ -1,4 +1,5 @@
 const Player = require('./player');
+const questions = require('../data/questions.json');
 
 module.exports = class Game {
   constructor() {
@@ -6,13 +7,34 @@ module.exports = class Game {
     this.textChannel = null;
     this.players = [];
     this.startedAt = new Date();
-    this.questions = [];
+    this.questions = questions;
     this.activeQuestionIndex = 0;
   }
 
+  /**
+   * Débute une partie
+   * - Enregistre les joueurs présents dans le channel vocal "Plateau"
+   * - Lance un décompte de 3s avant la première question
+   */
   start() {
     this.textChannel.send('La partie va commencer !');
 
+    // Recherche des joueurs dans le channel vocal
+    this.registerPlayers();
+
+    // Décompte de début de partie
+    this.countdown();
+
+    // Lance la boucle de jeu
+    this.gameLoop();
+  };
+
+  /**
+   * Enregistre les joueurs présents dans le channel vocal "Plateau"
+   * en créant des objets Player avec la référence de "member"
+   * https://discord.js.org/#/docs/main/stable/class/GuildMember
+   */
+  registerPlayers() {
     // Recherche des joueurs dans le channel vocal
     this.voiceChannel.members.forEach((member) => {
       // Ne pas s'enregistrer soi
@@ -21,12 +43,16 @@ module.exports = class Game {
         this.textChannel.send(`${member.displayName} enregistré`);
       // }
     });
+  };
 
-    // Décompte de début de partie
+  /**
+   * Lance un décompte de 3s en affichant le temps restant
+   */
+  countdown() {
     const COUNTDOWN_MS = 4000;
     let countdown = COUNTDOWN_MS / 1000;
     const countdownInterval = setInterval(() => {
-      this.textChannel.send(`La partie commence dans ${countdown - 1}`);
+      this.textChannel.send(`La partie commence dans ${countdown - 1} !`);
       countdown -= 1;
     }, 1000);
     setTimeout(() => {
@@ -34,7 +60,15 @@ module.exports = class Game {
     }, COUNTDOWN_MS);
   };
 
-  async registerPlayers() {
+  gameLoop() {
+    // Affichage question
+    console.log(`Question active : ${JSON.stringify(this.questions[this.activeQuestionIndex])}`);
 
-  };
+    // Temps pour répondre
+
+    // Affichage réponse
+
+    // Prochaine question
+    this.activeQuestionIndex += 1;
+  }
 }
