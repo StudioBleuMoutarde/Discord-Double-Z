@@ -12,7 +12,6 @@ module.exports = class Game {
     this.startedAt = new Date();
     this.questions = questions;
     this.activeQuestionIndex = 0;
-    this.openToAnswers = false;
   }
 
   /**
@@ -70,18 +69,23 @@ module.exports = class Game {
     // Affichage question active
     this.displayActiveQuestion();
 
-    // Ouvrir aux réponses
-    this.openToAnswers = true;
-
     // Temps pour répondre
+    const filter = () => true;
+    this.textChannel.awaitMessages(filter, { max: 50, time: 5000, errors: ['time'] })
+      .then((messages) => {
+        console.log(`- ${messages.first().author.username} a dit ${messages.first().content}`);
 
-    // Fermer aux réponses
-    this.openToAnswers = false;
+        // Vérification de la réponse
 
-    // Affichage réponse
+        // Recherche du joueur ayant répondu
+      })
+      .catch(() => {
+        // Affichage réponse
+        this.displayResponse();
 
-    // Prochaine question
-    this.activeQuestionIndex += 1;
+        // Décompte avant prochaine question
+        setTimeout(() => this.nextQuestion(), 3000);
+      });
   }
 
   /**
@@ -93,11 +97,42 @@ module.exports = class Game {
     const embedQuestion = {
       color: questionColors[activeQuestion.type],
       author: {
-        name: questionTypes[activeQuestion.type],
+        name: `(${this.activeQuestionIndex + 1} / ${this.questions.length}) ${questionTypes[activeQuestion.type]}`,
       },
       title: activeQuestion.label,
       description: `Indice : ${activeQuestion.hint}`,
     };
     this.textChannel.send({ embed: embedQuestion });
+  };
+
+  /**
+   * Affiche la réponse de la question active sous forme embed
+   * https://discordjs.guide/popular-topics/embeds.html#embed-preview
+   */
+  displayResponse() {
+    const activeQuestion = this.questions[this.activeQuestionIndex];
+    const embedResponse = {
+      color: questionColors.RESPONSE,
+      title: activeQuestion.response,
+    };
+    this.textChannel.send({ embed: embedResponse });
+  };
+
+  nextQuestion() {
+    // Si des questions encore disponible
+    if (this.activeQuestionIndex >= this.questions.length - 1) {
+      this.end();
+      return;
+    }
+
+    // Incrément de la question active
+    this.activeQuestionIndex += 1;
+
+    // On relance la boucle de jeu
+    this.gameLoop();
+  };
+
+  end() {
+    this.textChannel.send('La partie est finie !');
   };
 }
