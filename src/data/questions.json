@@ -2,16 +2,19 @@
   {
     "type": "INPUT",
     "label": "De quelle couleur est le cheval blanc d'Henri IV ?",
+    "hint": "C'est pas blanc",
     "response": "blanc"
   },
   {
     "type": "INPUT",
     "label": "Question 1 ?",
+    "hint": "Indice 1",
     "response": "test"
   },
   {
     "type": "INPUT",
     "label": "Question 2 ?",
+    "hint": "Indice 2",
     "response": "test"
   }
 ]

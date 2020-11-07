@@ -1,5 +1,9 @@
+const Discord = require('discord.js');
+
 const Player = require('./player');
 const questions = require('../data/questions.json');
+
+const questionTypes = require('../enums/question-types');
 
 module.exports = class Game {
   constructor() {
@@ -25,9 +29,6 @@ module.exports = class Game {
 
     // Décompte de début de partie
     this.countdown();
-
-    // Lance la boucle de jeu
-    this.gameLoop();
   };
 
   /**
@@ -48,6 +49,8 @@ module.exports = class Game {
 
   /**
    * Lance un décompte de 3s en affichant le temps restant
+   * 
+   * Lance la boucle de jeu à la fin du décompte
    */
   countdown() {
     const COUNTDOWN_MS = 4000;
@@ -58,12 +61,15 @@ module.exports = class Game {
     }, 1000);
     setTimeout(() => {
       clearInterval(countdownInterval);
+
+      // Lancement de la boucle de jeu
+      this.gameLoop();
     }, COUNTDOWN_MS);
   };
 
   gameLoop() {
-    // Affichage question
-    console.log(`Question active : ${JSON.stringify(this.questions[this.activeQuestionIndex])}`);
+    // Affichage question active
+    this.displayActiveQuestion();
 
     // Ouvrir aux réponses
     this.openToAnswers = true;
@@ -78,4 +84,17 @@ module.exports = class Game {
     // Prochaine question
     this.activeQuestionIndex += 1;
   }
+
+  /**
+   * Affiche la question active sous forme embed
+   * https://discordjs.guide/popular-topics/embeds.html#embed-preview
+   */
+  displayActiveQuestion() {
+    const activeQuestion = this.questions[this.activeQuestionIndex];
+    const embedQuestion = new Discord.MessageEmbed()
+      .setAuthor(questionTypes[activeQuestion.type])
+      .setTitle(activeQuestion.label)
+      .setDescription(`Indice : ${activeQuestion.hint}`);
+    this.textChannel.send(embedQuestion);
+  };
 }
