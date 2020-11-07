@@ -1,6 +1,7 @@
 const Player = require('./player');
 const questions = require('../data/questions.json');
 
+const constants = require('../data/constants');
 const questionTypes = require('../enums/question-types');
 const questionColors = require('../enums/question-colors');
 
@@ -51,8 +52,7 @@ module.exports = class Game {
    * Lance la boucle de jeu à la fin du décompte
    */
   countdown() {
-    const COUNTDOWN_MS = 4000;
-    let countdown = COUNTDOWN_MS / 1000;
+    let countdown = constants.START_COUNTDOWN_MS / 1000;
     const countdownInterval = setInterval(() => {
       this.textChannel.send(`La partie commence dans ${countdown - 1} !`);
       countdown -= 1;
@@ -62,7 +62,7 @@ module.exports = class Game {
 
       // Lancement de la boucle de jeu
       this.gameLoop();
-    }, COUNTDOWN_MS);
+    }, constants.START_COUNTDOWN_MS);
   };
 
   gameLoop() {
@@ -71,7 +71,7 @@ module.exports = class Game {
 
     // Temps pour répondre
     const filter = () => true;
-    this.textChannel.awaitMessages(filter, { max: 50, time: 5000, errors: ['time'] })
+    this.textChannel.awaitMessages(filter, { max: 50, time: constants.RESPONSE_TIME, errors: ['time'] })
       .then((messages) => {
         console.log(`- ${messages.first().author.username} a dit ${messages.first().content}`);
 
