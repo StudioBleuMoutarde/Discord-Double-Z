@@ -1,7 +1,17 @@
 [
   {
-    "type": "QUESTION",
+    "type": "INPUT",
     "label": "De quelle couleur est le cheval blanc d'Henri IV ?",
     "response": "blanc"
+  },
+  {
+    "type": "INPUT",
+    "label": "Question 1 ?",
+    "response": "test"
+  },
+  {
+    "type": "INPUT",
+    "label": "Question 2 ?",
+    "response": "test"
   }
 ]
