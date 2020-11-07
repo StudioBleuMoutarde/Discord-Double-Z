@@ -1,14 +1,15 @@
 module.exports = class Game {
   constructor() {
-    this.channel = null;
+    this.voiceChannel = null;
+    this.textChannel = null;
     this.players = [];
     this.startedAt = new Date();
     this.questions = [];
     this.activeQuestionIndex = 0;
   }
 
-  async start(message) {
-    message.reply('La partie va commencer !');
+  async start() {
+    this.textChannel.send('La partie va commencer !');
   };
 
   async registerPlayers() {
