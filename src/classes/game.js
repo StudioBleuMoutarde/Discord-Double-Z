@@ -1,5 +1,3 @@
-const Discord = require('discord.js');
-
 const Player = require('./player');
 const questions = require('../data/questions.json');
 
@@ -92,11 +90,14 @@ module.exports = class Game {
    */
   displayActiveQuestion() {
     const activeQuestion = this.questions[this.activeQuestionIndex];
-    const embedQuestion = new Discord.MessageEmbed()
-      .setColor(questionColors[activeQuestion.type])
-      .setAuthor(questionTypes[activeQuestion.type])
-      .setTitle(activeQuestion.label)
-      .setDescription(`Indice : ${activeQuestion.hint}`);
-    this.textChannel.send(embedQuestion);
+    const embedQuestion = {
+      color: questionColors[activeQuestion.type],
+      author: {
+        name: questionTypes[activeQuestion.type],
+      },
+      title: activeQuestion.label,
+      description: `Indice : ${activeQuestion.hint}`,
+    };
+    this.textChannel.send({ embed: embedQuestion });
   };
 }
