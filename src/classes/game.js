@@ -1,3 +1,5 @@
+const Player = require('./player');
+
 module.exports = class Game {
   constructor() {
     this.voiceChannel = null;
@@ -13,7 +15,7 @@ module.exports = class Game {
 
     // Recherche des joueurs dans le channel vocal
     this.voiceChannel.members.forEach((member) => {
-      this.players.push(member);
+      this.players.push(new Player(member));
       this.textChannel.send(`${member.displayName} enregistré`);
     });
   };
