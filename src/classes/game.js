@@ -113,7 +113,7 @@ module.exports = class Game {
     const activeQuestion = this.questions[this.activeQuestionIndex];
     const embedResponse = {
       color: questionColors.RESPONSE,
-      title: activeQuestion.response,
+      title: `${activeQuestion.label} : ${activeQuestion.response}`,
     };
     this.textChannel.send({ embed: embedResponse });
   };
@@ -133,6 +133,35 @@ module.exports = class Game {
   };
 
   end() {
-    this.textChannel.send('La partie est finie !');
+    this.displayResults();
+  };
+
+  /**
+   * Affiche les résultats de la partie sous forme embed
+   * https://discordjs.guide/popular-topics/embeds.html#embed-preview
+   */
+  displayResults() {
+    const embedResults = {
+      color: questionColors.RESULTS,
+      author: {
+        name: 'Fin de partie',
+      },
+      title: 'Grand gagnant : ',
+      fields: [
+        {
+          name: 'Joueur 1',
+          value: '? points',
+        },
+        {
+          name: 'Joueur 2',
+          value: '? points',
+        },
+        {
+          name: 'Joueur 3',
+          value: '? points',
+        },
+      ],
+    };
+    this.textChannel.send({ embed: embedResults });
   };
 }
