@@ -10,6 +10,12 @@ module.exports = class Game {
 
   async start() {
     this.textChannel.send('La partie va commencer !');
+
+    // Recherche des joueurs dans le channel vocal
+    this.voiceChannel.members.forEach((member) => {
+      this.players.push(member);
+      this.textChannel.send(`${member.displayName} enregistré`);
+    });
   };
 
   async registerPlayers() {

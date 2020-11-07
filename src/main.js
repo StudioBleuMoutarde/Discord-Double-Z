@@ -27,7 +27,7 @@ client.on('message', (message) => {
 client.on('ready', () => {
   console.log(`*** logged in as ${client.user.tag}`);
 
-  // Recherche des channels "Plateau"
+  // Recherche des références des channels "Plateau"
   client.channels.cache.forEach((chan) => {
     // regex pour le nom du channel "Plateau"
     const isNamePlateau = /plateau/i.test(chan.name);
