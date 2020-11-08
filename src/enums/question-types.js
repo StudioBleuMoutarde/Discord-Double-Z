@@ -1,4 +1,5 @@
 module.exports = {
   INPUT: 'Texte libre',
-  QCM: 'Choix multiple'
+  QCM: 'Choix multiple',
+  MUSIC: 'Musique'
 }

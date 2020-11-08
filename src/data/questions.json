@@ -11,27 +11,27 @@
     "hint": "C'est pas Jakchira",
     "propositions": [
       {
-        "label": "JB",
+        "label": "Jakchira",
         "value": "1"
       },
       {
-        "label": "Jakchira",
+        "label": "JB",
         "value": "2"
       }
     ],
-    "response": "1"
+    "response": "2"
+  },
+  {
+    "type": "MUSIC",
+    "label": "Reconnaissez la musique",
+    "response": "Rick Astley - Never gonna give you up",
+    "hint": "Un classique",
+    "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO"
   },
   {
     "type": "INPUT",
     "label": "Question 1 ?",
-    "response": "test",
-    "points": 2
-  },
-  {
-    "type": "INPUT",
-    "label": "Question 2 ?",
-    "hint": "Indice 2",
-    "response": "test",
-    "points": 1
+    "hint": "test",
+    "response": "test"
   }
 ]

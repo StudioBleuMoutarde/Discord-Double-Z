@@ -1,3 +1,5 @@
+const ytdl = require('ytdl-core');
+
 const Player = require('./player');
 const questions = require('../data/questions.json');
 
@@ -7,6 +9,7 @@ const questionColors = require('../enums/question-colors');
 module.exports = class Game {
   constructor() {
     this.voiceChannel = null;
+    this.voiceChannelConnection = null;
     this.textChannel = null;
     this.players = [];
     this.startedAt = new Date();
@@ -22,11 +25,14 @@ module.exports = class Game {
    * - Enregistre les joueurs présents dans le channel vocal "Plateau"
    * - Lance un décompte de 3s avant la première question
    */
-  start() {
+  async start() {
     this.textChannel.send('La partie va commencer !');
 
     // Recherche des joueurs dans le channel vocal
     this.registerPlayers();
+
+    // Le bot rejoint le channel vocal
+    this.voiceChannelConnection = await this.voiceChannel.join();
 
     // Décompte de début de partie
     this.countdown();
@@ -41,10 +47,10 @@ module.exports = class Game {
     // Recherche des joueurs dans le channel vocal
     this.voiceChannel.members.forEach((member) => {
       // Ne pas s'enregistrer soi
-      // if (member.userID !== process.env.ADMIN_ID) {
+      if (member.userID !== process.env.ADMIN_ID) {
         this.players.push(new Player(member));
         this.textChannel.send(`${member.displayName} enregistré`);
-      // }
+      }
     });
   };
 
@@ -78,9 +84,10 @@ module.exports = class Game {
     this.initActiveQuestion();
 
     // Temps pour répondre
+    // Plus de temps pour les musiques
     this.questionTimeout = setTimeout(() => {
       this.endActiveQuestion();
-    }, process.env.RESPONSE_TIME);
+    }, this.questions[this.activeQuestionIndex].type === 'MUSIC' ? process.env.RESPONSE_MUSIC_TIME : process.env.RESPONSE_TIME);
   }
 
   /**
@@ -99,6 +106,21 @@ module.exports = class Game {
           value: proposition.value,
         });
       });
+    }
+
+    // Pour les questions musique, on lance la musique
+    if (activeQuestion.type === 'MUSIC') {
+      // Lancer la musique
+      this.voiceChannelConnection
+        .play(
+          ytdl(activeQuestion.url),
+          {
+            volume: 0.1,
+          }
+        )
+        .on('error', (error) => {
+          this.textChannel.send(`Erreur lors de la lecture de la musique : ${JSON.stringify(error)}`);
+        });
     }
 
     const embedQuestion = {
@@ -124,6 +146,11 @@ module.exports = class Game {
    * - Passe à la question suivante après un certain temps
    */
   endActiveQuestion() {
+    // Arrete la musique si question MUSIC
+    if (this.questions[this.activeQuestionIndex].type === 'MUSIC') {
+      this.voiceChannelConnection.dispatcher.end();
+    }
+
     // Fermeture des réponses
     this.isOpenToAnswers = false;
 
@@ -166,6 +193,9 @@ module.exports = class Game {
 
   end() {
     this.displayResults();
+
+    // Quitter le channel vocal
+    this.voiceChannel.leave();
   };
 
   /**
@@ -174,7 +204,7 @@ module.exports = class Game {
    */
   displayResults() {
     // Tri des joueurs par score
-    const sortedPlayers = this.players.sort((a, b) => a.score - b.score);
+    const sortedPlayers = this.players.sort((a, b) => b.score - a.score);
 
     // Récupération du score des joueurs
     const fields = sortedPlayers.map((player) => {
