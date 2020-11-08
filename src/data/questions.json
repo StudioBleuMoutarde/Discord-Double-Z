@@ -8,13 +8,14 @@
   {
     "type": "INPUT",
     "label": "Question 1 ?",
-    "hint": "Indice 1",
-    "response": "test"
+    "response": "test",
+    "points": 2
   },
   {
     "type": "INPUT",
     "label": "Question 2 ?",
     "hint": "Indice 2",
-    "response": "test"
+    "response": "test",
+    "points": 1
   }
 ]

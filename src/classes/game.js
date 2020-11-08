@@ -13,6 +13,7 @@ module.exports = class Game {
     this.startedAt = new Date();
     this.questions = questions;
     this.activeQuestionIndex = 0;
+    this.isOpenToAnswers = false;
   }
 
   /**
@@ -65,27 +66,32 @@ module.exports = class Game {
     }, constants.START_COUNTDOWN_MS);
   };
 
+  /**
+   * Boucle de jeu
+   * 1 - On affiche la quesion
+   * 2 - On ouvre les réponses
+   * 3 - Attente du temps de la question
+   * 4 - On affiche la réponse
+   * 5 - Prochaine question
+   */
   gameLoop() {
     // Affichage question active
     this.displayActiveQuestion();
 
+    // Ouverture des réponses
+    this.isOpenToAnswers = true;
+
     // Temps pour répondre
-    const filter = () => true;
-    this.textChannel.awaitMessages(filter, { max: 50, time: constants.RESPONSE_TIME, errors: ['time'] })
-      .then((messages) => {
-        console.log(`- ${messages.first().author.username} a dit ${messages.first().content}`);
+    setTimeout(() => {
+      // Fermeture des réponses
+      this.isOpenToAnswers = false;
 
-        // Vérification de la réponse
+      // Affichage réponse
+      this.displayResponse();
 
-        // Recherche du joueur ayant répondu
-      })
-      .catch(() => {
-        // Affichage réponse
-        this.displayResponse();
-
-        // Décompte avant prochaine question
-        setTimeout(() => this.nextQuestion(), 3000);
-      });
+      // Décompte avant prochaine question
+      setTimeout(() => this.nextQuestion(), 3000);
+    }, constants.RESPONSE_TIME);
   }
 
   /**
@@ -100,7 +106,7 @@ module.exports = class Game {
         name: `(${this.activeQuestionIndex + 1} / ${this.questions.length}) ${questionTypes[activeQuestion.type]}`,
       },
       title: activeQuestion.label,
-      description: `Indice : ${activeQuestion.hint}`,
+      ...(activeQuestion?.hint && { description: `Indice : ${activeQuestion.hint}` }),
     };
     this.textChannel.send({ embed: embedQuestion });
   };
@@ -164,4 +170,25 @@ module.exports = class Game {
     };
     this.textChannel.send({ embed: embedResults });
   };
+
+  /**
+   * Gestion de la réponse d'un joueur
+   * Une réponse n'est acceptée que si les réponses sont ouvertes
+   *
+   * @param {*} message 
+   */
+  playerResponse(message) {
+    if (!this.isOpenToAnswers) return;
+
+    // Vérification de la réponse
+    const regex = new RegExp(this.questions[this.activeQuestionIndex].response, 'i');
+    if (regex.test(message.content)) {
+      // Bonne réponse
+      // Recherche du membre
+      const player = this.players.find((player) => player.member.id === message.author.id);
+      player.incrementScore(this.questions[this.activeQuestionIndex]?.points || 1);
+    } else {
+      // Mauvaise réponse
+    }
+  }
 }

@@ -18,6 +18,9 @@ client.on('message', (message) => {
   if (message.author.id === process.env.ADMIN_ID) {
     // Si admin parle
     handleAdminResponse(message);
+  } else {
+    // Si joueur parle
+    game.playerResponse(message);
   }
 });
 
