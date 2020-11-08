@@ -110,10 +110,11 @@ module.exports = class Game {
       ...(activeQuestion?.hint && { description: `Indice : ${activeQuestion.hint}` }),
       ...(fields.length > 0 && { fields }),
     };
-    this.textChannel.send({ embed: embedQuestion });
-
-    // Ouverture des réponses
-    this.isOpenToAnswers = true;
+    this.textChannel.send({ embed: embedQuestion })
+      .then(() => {
+        // Ouverture des réponses
+        this.isOpenToAnswers = true;
+      });
   };
 
   /**
@@ -172,26 +173,24 @@ module.exports = class Game {
    * https://discordjs.guide/popular-topics/embeds.html#embed-preview
    */
   displayResults() {
+    // Tri des joueurs par score
+    const sortedPlayers = this.players.sort((a, b) => a.score - b.score);
+
+    // Récupération du score des joueurs
+    const fields = sortedPlayers.map((player) => {
+      return {
+        name: player.member.user.username,
+        value: `${player.score} points`,
+      }
+    });
+
     const embedResults = {
       color: questionColors.RESULTS,
       author: {
         name: 'Fin de partie',
       },
-      title: 'Grand gagnant : ',
-      fields: [
-        {
-          name: 'Joueur 1',
-          value: '? points',
-        },
-        {
-          name: 'Joueur 2',
-          value: '? points',
-        },
-        {
-          name: 'Joueur 3',
-          value: '? points',
-        },
-      ],
+      title: `GG ${fields[0].name}`,
+      fields,
     };
     this.textChannel.send({ embed: embedResults });
   };
