@@ -129,7 +129,7 @@ module.exports = class Game {
         name: `(${this.activeQuestionIndex + 1} / ${this.questions.length}) ${questionTypes[activeQuestion.type]}`,
       },
       title: activeQuestion.label,
-      ...(activeQuestion?.hint && { description: `Indice : ${activeQuestion.hint}` }),
+      ...(activeQuestion.hint && { description: `Indice : ${activeQuestion.hint}` }),
       ...(fields.length > 0 && { fields }),
     };
     this.textChannel.send({ embed: embedQuestion })
@@ -240,7 +240,7 @@ module.exports = class Game {
       // Bonne réponse
       // Recherche du membre
       const player = this.players.find((player) => player.member.id === message.author.id);
-      player.incrementScore(this.questions[this.activeQuestionIndex]?.points || 1);
+      player.incrementScore(this.questions[this.activeQuestionIndex].points || 1);
 
       this.textChannel.send(`<@${message.author.id}> a trouvé la bonne réponse !`);
 
