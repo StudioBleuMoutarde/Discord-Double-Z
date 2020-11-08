@@ -6,6 +6,22 @@
     "response": "blanc"
   },
   {
+    "type": "QCM",
+    "label": "Le meilleur joueur sur Biped ?",
+    "hint": "C'est pas Jakchira",
+    "propositions": [
+      {
+        "label": "JB",
+        "value": "1"
+      },
+      {
+        "label": "Jakchira",
+        "value": "2"
+      }
+    ],
+    "response": "1"
+  },
+  {
     "type": "INPUT",
     "label": "Question 1 ?",
     "response": "test",

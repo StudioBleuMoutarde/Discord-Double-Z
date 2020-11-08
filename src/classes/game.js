@@ -69,18 +69,13 @@ module.exports = class Game {
 
   /**
    * Boucle de jeu
-   * 1 - On affiche la quesion
-   * 2 - On ouvre les réponses
-   * 3 - Attente du temps de la question
-   * 4 - On affiche la réponse
-   * 5 - Prochaine question
+   * 1 - On affiche la quesion active
+   * 2 - Attente du temps de la question
+   * 3 - On affiche la réponse
    */
   gameLoop() {
     // Affichage question active
-    this.displayActiveQuestion();
-
-    // Ouverture des réponses
-    this.isOpenToAnswers = true;
+    this.initActiveQuestion();
 
     // Temps pour répondre
     this.questionTimeout = setTimeout(() => {
@@ -88,6 +83,45 @@ module.exports = class Game {
     }, process.env.RESPONSE_TIME);
   }
 
+  /**
+   * Affiche la question active sous forme embed
+   * https://discordjs.guide/popular-topics/embeds.html#embed-preview
+   */
+  initActiveQuestion() {
+    const activeQuestion = this.questions[this.activeQuestionIndex];
+
+    // Pour les questions QCM on a des propositions
+    let fields = [];
+    if (activeQuestion.type === 'QCM') {
+      activeQuestion.propositions.forEach((proposition) => {
+        fields.push({
+          name: proposition.label,
+          value: proposition.value,
+        });
+      });
+    }
+
+    const embedQuestion = {
+      color: questionColors[activeQuestion.type],
+      author: {
+        name: `(${this.activeQuestionIndex + 1} / ${this.questions.length}) ${questionTypes[activeQuestion.type]}`,
+      },
+      title: activeQuestion.label,
+      ...(activeQuestion?.hint && { description: `Indice : ${activeQuestion.hint}` }),
+      ...(fields.length > 0 && { fields }),
+    };
+    this.textChannel.send({ embed: embedQuestion });
+
+    // Ouverture des réponses
+    this.isOpenToAnswers = true;
+  };
+
+  /**
+   * Termine la question active
+   * - Ferme les réponses
+   * - Affiche la réponse
+   * - Passe à la question suivante après un certain temps
+   */
   endActiveQuestion() {
     // Fermeture des réponses
     this.isOpenToAnswers = false;
@@ -96,24 +130,7 @@ module.exports = class Game {
     this.displayResponse();
 
     // Décompte avant prochaine question
-    setTimeout(() => this.nextQuestion(), 3000);
-  };
-
-  /**
-   * Affiche la question active sous forme embed
-   * https://discordjs.guide/popular-topics/embeds.html#embed-preview
-   */
-  displayActiveQuestion() {
-    const activeQuestion = this.questions[this.activeQuestionIndex];
-    const embedQuestion = {
-      color: questionColors[activeQuestion.type],
-      author: {
-        name: `(${this.activeQuestionIndex + 1} / ${this.questions.length}) ${questionTypes[activeQuestion.type]}`,
-      },
-      title: activeQuestion.label,
-      ...(activeQuestion?.hint && { description: `Indice : ${activeQuestion.hint}` }),
-    };
-    this.textChannel.send({ embed: embedQuestion });
+    setTimeout(() => this.nextQuestion(), process.env.DISPLAY_RESPONE_TIME);
   };
 
   /**
@@ -129,6 +146,9 @@ module.exports = class Game {
     this.textChannel.send({ embed: embedResponse });
   };
 
+  /**
+   * Incrémente l'index de la question active si il en reste, sinon termine la partie
+   */
   nextQuestion() {
     // Si des questions encore disponible
     if (this.activeQuestionIndex >= this.questions.length - 1) {
