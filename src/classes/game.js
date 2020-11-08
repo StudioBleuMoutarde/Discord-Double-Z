@@ -1,7 +1,6 @@
 const Player = require('./player');
 const questions = require('../data/questions.json');
 
-const constants = require('../data/constants');
 const questionTypes = require('../enums/question-types');
 const questionColors = require('../enums/question-colors');
 
@@ -53,7 +52,7 @@ module.exports = class Game {
    * Lance la boucle de jeu à la fin du décompte
    */
   countdown() {
-    let countdown = constants.START_COUNTDOWN_MS / 1000;
+    let countdown = process.env.START_COUNTDOWN_MS / 1000;
     const countdownInterval = setInterval(() => {
       this.textChannel.send(`La partie commence dans ${countdown - 1} !`);
       countdown -= 1;
@@ -63,7 +62,7 @@ module.exports = class Game {
 
       // Lancement de la boucle de jeu
       this.gameLoop();
-    }, constants.START_COUNTDOWN_MS);
+    }, process.env.START_COUNTDOWN_MS);
   };
 
   /**
@@ -91,7 +90,7 @@ module.exports = class Game {
 
       // Décompte avant prochaine question
       setTimeout(() => this.nextQuestion(), 3000);
-    }, constants.RESPONSE_TIME);
+    }, process.env.RESPONSE_TIME);
   }
 
   /**
