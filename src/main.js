@@ -55,7 +55,6 @@ client.login(process.env.DISCORD_TOKEN);
  * @param {*} message 
  */
 const handleAdminResponse = (message) => {
-  console.log(`Un admin a dit "${message.content}"`);
   switch (message.content) {
     case '!start':
       game.start();
