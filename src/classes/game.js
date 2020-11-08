@@ -46,8 +46,8 @@ module.exports = class Game {
   registerPlayers() {
     // Recherche des joueurs dans le channel vocal
     this.voiceChannel.members.forEach((member) => {
-      // Ne pas s'enregistrer soi
-      if (member.userID !== process.env.ADMIN_ID) {
+      // Ne pas s'enregistrer soi, ni le bot
+      if (!member.user.bot && member.user.id !== process.env.ADMIN_ID) {
         this.players.push(new Player(member));
         this.textChannel.send(`${member.displayName} enregistré`);
       }
