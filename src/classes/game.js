@@ -13,6 +13,8 @@ module.exports = class Game {
     this.questions = questions;
     this.activeQuestionIndex = 0;
     this.isOpenToAnswers = false;
+
+    this.questionTimeout = null;
   }
 
   /**
@@ -81,17 +83,21 @@ module.exports = class Game {
     this.isOpenToAnswers = true;
 
     // Temps pour répondre
-    setTimeout(() => {
-      // Fermeture des réponses
-      this.isOpenToAnswers = false;
-
-      // Affichage réponse
-      this.displayResponse();
-
-      // Décompte avant prochaine question
-      setTimeout(() => this.nextQuestion(), 3000);
+    this.questionTimeout = setTimeout(() => {
+      this.endActiveQuestion();
     }, process.env.RESPONSE_TIME);
   }
+
+  endActiveQuestion() {
+    // Fermeture des réponses
+    this.isOpenToAnswers = false;
+
+    // Affichage réponse
+    this.displayResponse();
+
+    // Décompte avant prochaine question
+    setTimeout(() => this.nextQuestion(), 3000);
+  };
 
   /**
    * Affiche la question active sous forme embed
@@ -186,6 +192,12 @@ module.exports = class Game {
       // Recherche du membre
       const player = this.players.find((player) => player.member.id === message.author.id);
       player.incrementScore(this.questions[this.activeQuestionIndex]?.points || 1);
+
+      this.textChannel.send(`<@${message.author.id}> a trouvé la bonne réponse !`);
+
+      // Fin de la question prématuré
+      if (this.questionTimeout) clearTimeout(this.questionTimeout);
+      this.endActiveQuestion();
     } else {
       // Mauvaise réponse
     }
