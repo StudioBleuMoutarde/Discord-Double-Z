@@ -15,9 +15,12 @@ module.exports = class Game {
     this.startedAt = new Date();
     this.questions = questions;
     this.activeQuestionIndex = 0;
-    this.isOpenToAnswers = false;
+
+    this.isInBuzz = false;
+    this.playersAlreadyBuzzed = [];
 
     this.questionTimeout = null;
+    this.questionMessageId = null;
   }
 
   /**
@@ -49,7 +52,7 @@ module.exports = class Game {
       // Ne pas s'enregistrer soi, ni le bot
       if (!member.user.bot && member.user.id !== process.env.ADMIN_ID) {
         this.players.push(new Player(member));
-        this.textChannel.send(`${member.displayName} enregistré`);
+        this.textChannel.send(`* ${member.displayName} enregistré`);
       }
     });
   };
@@ -133,9 +136,11 @@ module.exports = class Game {
       ...(fields.length > 0 && { fields }),
     };
     this.textChannel.send({ embed: embedQuestion })
-      .then(() => {
-        // Ouverture des réponses
-        this.isOpenToAnswers = true;
+      .then((msg) => {
+        this.questionMessageId = msg.id;
+
+        // Ajout de réactions
+        msg.react('👍');
       });
   };
 
@@ -150,9 +155,6 @@ module.exports = class Game {
     if (this.questions[this.activeQuestionIndex].type === 'MUSIC') {
       this.voiceChannelConnection.dispatcher.end();
     }
-
-    // Fermeture des réponses
-    this.isOpenToAnswers = false;
 
     // Affichage réponse
     this.displayResponse();
@@ -186,6 +188,9 @@ module.exports = class Game {
 
     // Incrément de la question active
     this.activeQuestionIndex += 1;
+
+    // Reset des infos
+    this.playersAlreadyBuzzed = [];
 
     // On relance la boucle de jeu
     this.gameLoop();
@@ -226,29 +231,28 @@ module.exports = class Game {
   };
 
   /**
-   * Gestion de la réponse d'un joueur
-   * Une réponse n'est acceptée que si les réponses sont ouvertes
-   *
-   * @param {*} message 
+   * Gestion du buzz d'un joueur
+   * @param {*} userId 
    */
-  playerResponse(message) {
-    if (!this.isOpenToAnswers) return;
+  buzz(userId, messageId) {
+    // Déjà en buzz ?
+    if (this.isInBuzz) return;
 
-    // Vérification de la réponse
-    const regex = new RegExp(this.questions[this.activeQuestionIndex].response, 'i');
-    if (regex.test(message.content)) {
-      // Bonne réponse
-      // Recherche du membre
-      const player = this.players.find((player) => player.member.id === message.author.id);
-      player.incrementScore(this.questions[this.activeQuestionIndex].points || 1);
+    // Le joueur a t-il déjà buzzé ?
+    if (this.playersAlreadyBuzzed.includes(userId)) return;
 
-      this.textChannel.send(`<@${message.author.id}> a trouvé la bonne réponse !`);
+    // Reaction sur la question en cours ?
+    if (this.questionMessageId !== messageId) return;
 
-      // Fin de la question prématuré
-      if (this.questionTimeout) clearTimeout(this.questionTimeout);
-      this.endActiveQuestion();
-    } else {
-      // Mauvaise réponse
-    }
+    // Indication que état a BUZZ
+    this.isInBuzz = true;
+
+    // Ajout à la liste des joueurs ayant déjà buzzé
+    this.playersAlreadyBuzzed.push(userId);
+
+    // Message pour savoir qui a buzzé
+    this.textChannel.send(`<@${userId}> A buzzé !`);
+
+    // Mise en pause du timer de question
   }
 }

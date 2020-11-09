@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const Discord = require('discord.js');
-const client = new Discord.Client();
+const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 
 const Game = require('./classes/game');
 const game = new Game();
@@ -22,6 +22,14 @@ client.on('message', (message) => {
     // Si joueur parle
     game.playerResponse(message);
   }
+});
+
+client.on('messageReactionAdd', async (reaction, user) => {
+  // On ne prend pas les réactions du bot
+  if (user.bot) return;
+
+  // Joueur a buzzé
+  game.buzz(user.id, reaction.message.id);
 });
 
 // Confirmation de connexion
