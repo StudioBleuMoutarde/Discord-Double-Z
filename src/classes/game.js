@@ -16,10 +16,11 @@ module.exports = class Game {
     this.questions = questions;
     this.activeQuestionIndex = 0;
 
-    this.isInBuzz = false;
+    this.isInBuzz = null;
     this.playersAlreadyBuzzed = [];
 
-    this.questionTimeout = null;
+    this.questionTimeRemaining = process.env.RESPONSE_TIME;
+    this.questionInterval = null;
     this.questionMessageId = null;
   }
 
@@ -84,13 +85,30 @@ module.exports = class Game {
    */
   gameLoop() {
     // Affichage question active
+    console.log('- Init question');
     this.initActiveQuestion();
 
-    // Temps pour répondre
-    // Plus de temps pour les musiques
-    this.questionTimeout = setTimeout(() => {
-      this.endActiveQuestion();
-    }, this.questions[this.activeQuestionIndex].type === 'MUSIC' ? process.env.RESPONSE_MUSIC_TIME : process.env.RESPONSE_TIME);
+    // Timer pour la question
+    if (this.questions[this.activeQuestionIndex].type === 'MUSIC') {
+      this.questionTimeRemaining = process.env.RESPONSE_MUSIC_TIME;
+    } else {
+      this.questionTimeRemaining = process.env.RESPONSE_TIME;
+    }
+    console.log(`- Timer a ${this.questionTimeRemaining}`);
+
+    this.questionInterval = setInterval(() => {
+      // Lorsque le timer atteint 0
+      if (this.questionTimeRemaining <= 0) {
+        console.log('- Fin question');
+        this.endActiveQuestion();
+      }
+
+      if (!this.isInBuzz) {
+        // Si pas en buzz alors le timer continue
+        this.questionTimeRemaining -= 1000;
+        console.log(`- --- -1 seconde : ${this.questionTimeRemaining}`);
+      }
+    }, 1000);
   }
 
   /**
@@ -151,6 +169,10 @@ module.exports = class Game {
    * - Passe à la question suivante après un certain temps
    */
   endActiveQuestion() {
+    // Clear l'interval timer de la question
+    console.log('- clear interval');
+    clearInterval(this.questionInterval);
+
     // Arrete la musique si question MUSIC
     if (this.questions[this.activeQuestionIndex].type === 'MUSIC') {
       this.voiceChannelConnection.dispatcher.end();
@@ -168,6 +190,7 @@ module.exports = class Game {
    * https://discordjs.guide/popular-topics/embeds.html#embed-preview
    */
   displayResponse() {
+    console.log('- affichage réponse');
     const activeQuestion = this.questions[this.activeQuestionIndex];
     const embedResponse = {
       color: questionColors.RESPONSE,
@@ -197,6 +220,7 @@ module.exports = class Game {
   };
 
   end() {
+    console.log('*** Fin de partie');
     this.displayResults();
 
     // Quitter le channel vocal
@@ -235,24 +259,53 @@ module.exports = class Game {
    * @param {*} userId 
    */
   buzz(userId, messageId) {
+    console.log(`- Joueur ${userId} a buzzé`);
+
+    // Temps restant ?
+    console.log(`- Temps restant ? ${this.questionTimeRemaining}`);
+    if (this.questionTimeRemaining <= 0) return;
+
     // Déjà en buzz ?
-    if (this.isInBuzz) return;
+    console.log(`- Déjà en buzz ? ${!!this.isInBuzz}`);
+    if (!!this.isInBuzz) return;
 
     // Le joueur a t-il déjà buzzé ?
+    console.log(`- Joueur a déjà buzzé ? ${this.playersAlreadyBuzzed.includes(userId)}`);
     if (this.playersAlreadyBuzzed.includes(userId)) return;
 
     // Reaction sur la question en cours ?
     if (this.questionMessageId !== messageId) return;
 
     // Indication que état a BUZZ
-    this.isInBuzz = true;
+    this.isInBuzz = userId;
 
     // Ajout à la liste des joueurs ayant déjà buzzé
     this.playersAlreadyBuzzed.push(userId);
 
     // Message pour savoir qui a buzzé
-    this.textChannel.send(`<@${userId}> A buzzé !`);
+    this.textChannel.send(`<@${userId}> A buzzé !`)
+      .then((msg) => {
+        // Ajout de réactions
+        msg.react('🆗')
+          .then(() => msg.react('⛔'));
+      });
+  }
 
-    // Mise en pause du timer de question
+  buzzResponse(reaction) {
+    console.log(`- Admin reacted with : ${reaction.emoji.name}`);
+    if (reaction.emoji.name === '🆗') {
+      // Le joueur a bien répondu
+      // Recherche du membre
+      const player = this.players.find((player) => player.member.id === this.isInBuzz);
+      player.incrementScore(this.questions[this.activeQuestionIndex].points || 1);
+
+      this.textChannel.send(`<@${this.isInBuzz}> a trouvé la bonne réponse !`);
+
+      // Fin de la question prématuré
+      this.endActiveQuestion();
+    }
+
+    // Si le joueur a mal répondu alors on se contente de débloquer le timer
+    this.isInBuzz = null;
   }
 }

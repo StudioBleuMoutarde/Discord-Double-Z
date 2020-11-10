@@ -28,8 +28,13 @@ client.on('messageReactionAdd', async (reaction, user) => {
   // On ne prend pas les réactions du bot
   if (user.bot) return;
 
-  // Joueur a buzzé
-  game.buzz(user.id, reaction.message.id);
+  if (user.id === process.env.ADMIN_ID) {
+    // Admin a décidé du résultat d'une question
+    game.buzzResponse(reaction);
+  } else {
+    // Joueur a buzzé
+    game.buzz(user.id, reaction.message.id);
+  }
 });
 
 // Confirmation de connexion
