@@ -297,9 +297,10 @@ module.exports = class Game {
       // Le joueur a bien répondu
       // Recherche du membre
       const player = this.players.find((player) => player.member.id === this.isInBuzz);
-      player.incrementScore(this.questions[this.activeQuestionIndex].points || 1);
+      const pointsEarned = this.questions[this.activeQuestionIndex].points || 1;
+      player.incrementScore(pointsEarned);
 
-      this.textChannel.send(`<@${this.isInBuzz}> a trouvé la bonne réponse !`);
+      this.textChannel.send(`<@${this.isInBuzz}> a trouvé la bonne réponse ! +${pointsEarned} points !`);
 
       // Fin de la question prématuré
       this.endActiveQuestion();
