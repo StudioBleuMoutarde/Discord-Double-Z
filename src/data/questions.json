@@ -6,6 +6,13 @@
     "response": "blanc"
   },
   {
+    "type": "IMAGE",
+    "label": "Que représente cette image ?",
+    "hint": "test",
+    "image": "https://i.imgur.com/wSTFkRM.png",
+    "response": "test"
+  },
+  {
     "type": "QCM",
     "label": "Le meilleur joueur sur Biped ?",
     "hint": "C'est pas Jakchira",

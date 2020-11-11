@@ -118,15 +118,23 @@ module.exports = class Game {
   initActiveQuestion() {
     const activeQuestion = this.questions[this.activeQuestionIndex];
 
-    // Pour les questions QCM on a des propositions
+    // Si on a des propositions sur la question
     let fields = [];
-    if (activeQuestion.type === 'QCM') {
+    if (activeQuestion.propositions && activeQuestion.propositions.length > 0) {
       activeQuestion.propositions.forEach((proposition) => {
         fields.push({
           name: proposition.label,
           value: proposition.value,
         });
       });
+    }
+
+    // Si on a une image sur la question alors on ajoute un thumbnail
+    let thumbnail = null;
+    if (activeQuestion.image) {
+      thumbnail = {
+        url: activeQuestion.image,
+      };
     }
 
     // Pour les questions musique, on lance la musique
@@ -152,7 +160,9 @@ module.exports = class Game {
       title: activeQuestion.label,
       ...(activeQuestion.hint && { description: `Indice : ${activeQuestion.hint}` }),
       ...(fields.length > 0 && { fields }),
+      ...(thumbnail && { thumbnail }),
     };
+
     this.textChannel.send({ embed: embedQuestion })
       .then((msg) => {
         this.questionMessageId = msg.id;
@@ -293,6 +303,7 @@ module.exports = class Game {
 
   buzzResponse(reaction) {
     console.log(`- Admin reacted with : ${reaction.emoji.name}`);
+
     if (reaction.emoji.name === '🆗') {
       // Le joueur a bien répondu
       // Recherche du membre
@@ -307,6 +318,8 @@ module.exports = class Game {
     }
 
     // Si le joueur a mal répondu alors on se contente de débloquer le timer
+    this.textChannel.send(`FAUX ! La partie reprend, il reste ${this.questionTimeRemaining / 1000} secondes`);
+
     this.isInBuzz = null;
   }
 }
