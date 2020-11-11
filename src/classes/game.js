@@ -52,7 +52,7 @@ module.exports = class Game {
     this.voiceChannel.members.forEach((member) => {
       // Ne pas s'enregistrer soi, ni le bot
       if (!member.user.bot && member.user.id !== process.env.ADMIN_ID) {
-        this.players.push(new Player(member));
+        this.players.push(new Player(member.user.username, member.user.id));
         this.textChannel.send(`* ${member.displayName} enregistré`);
       }
     });
@@ -248,7 +248,7 @@ module.exports = class Game {
     // Récupération du score des joueurs
     const fields = sortedPlayers.map((player) => {
       return {
-        name: player.member.user.username,
+        name: player.username,
         value: `${player.score} points`,
       }
     });
@@ -270,6 +270,9 @@ module.exports = class Game {
    */
   buzz(userId, messageId) {
     console.log(`- Joueur ${userId} a buzzé`);
+
+    // Le joueur est enregistré ?
+    if (!(this.players.some((p) => p.userId === userId))) return;
 
     // Temps restant ?
     console.log(`- Temps restant ? ${this.questionTimeRemaining}`);
@@ -307,7 +310,7 @@ module.exports = class Game {
     if (reaction.emoji.name === '🆗') {
       // Le joueur a bien répondu
       // Recherche du membre
-      const player = this.players.find((player) => player.member.id === this.isInBuzz);
+      const player = this.players.find((player) => player.userId === this.isInBuzz);
       const pointsEarned = this.questions[this.activeQuestionIndex].points || 1;
       player.incrementScore(pointsEarned);
 
@@ -315,11 +318,11 @@ module.exports = class Game {
 
       // Fin de la question prématuré
       this.endActiveQuestion();
+    } else {
+      this.textChannel.send(`FAUX ! La partie reprend, il reste ${this.questionTimeRemaining / 1000} secondes`);
     }
 
     // Si le joueur a mal répondu alors on se contente de débloquer le timer
-    this.textChannel.send(`FAUX ! La partie reprend, il reste ${this.questionTimeRemaining / 1000} secondes`);
-
     this.isInBuzz = null;
   }
 }

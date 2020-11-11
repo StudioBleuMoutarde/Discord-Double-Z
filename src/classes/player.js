@@ -1,7 +1,8 @@
 module.exports = class Player {
-  constructor(member) {
+  constructor(username, userId) {
     this.score = 0;
-    this.member = member;
+    this.username = username;
+    this.userId = userId;
   }
 
   async incrementScore(points) {
