@@ -155,7 +155,7 @@ module.exports = class Game {
     const embedQuestion = {
       color: questionColors[activeQuestion.type],
       author: {
-        name: `(${this.activeQuestionIndex + 1} / ${this.questions.length}) ${questionTypes[activeQuestion.type]}`,
+        name: `(${this.activeQuestionIndex + 1} / ${this.questions.length})  +${activeQuestion.points || 1} points`,
       },
       title: activeQuestion.label,
       ...(activeQuestion.hint && { description: `Indice : ${activeQuestion.hint}` }),
