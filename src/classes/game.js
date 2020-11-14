@@ -268,7 +268,7 @@ module.exports = class Game {
       author: {
         name: 'Fin de partie',
       },
-      title: `GG ${fields[0].name}`,
+      title: `GG ${fields[0] ? fields[0].name : 'Bel inconnu'}`,
       fields,
     };
     this.textChannel.send({ embed: embedResults });
