@@ -38,6 +38,13 @@ module.exports = class Game {
     // Le bot rejoint le channel vocal
     this.voiceChannelConnection = await this.voiceChannel.join();
 
+    if (!this.voiceChannelConnection) {
+      this.textChannel.send(`Je n'ai pas réussi à m'initialiser correctement :(`);
+
+      // Quitter le channel vocal
+      this.voiceChannel.leave();
+    }
+
     // Décompte de début de partie
     this.countdown();
   };
@@ -85,7 +92,7 @@ module.exports = class Game {
    */
   gameLoop() {
     // Affichage question active
-    console.log('- Init question');
+    console.log(`Init question ${this.activeQuestionIndex + 1}`);
     this.initActiveQuestion();
 
     // Timer pour la question
@@ -94,19 +101,22 @@ module.exports = class Game {
     } else {
       this.questionTimeRemaining = process.env.RESPONSE_TIME;
     }
-    console.log(`- Timer a ${this.questionTimeRemaining}`);
+    console.log(`(${this.activeQuestionIndex + 1}) Timer a ${this.questionTimeRemaining}`);
 
     this.questionInterval = setInterval(() => {
       // Lorsque le timer atteint 0
       if (this.questionTimeRemaining <= 0) {
-        console.log('- Fin question');
+        console.log(`Fin question ${this.activeQuestionIndex + 1}`);
         this.endActiveQuestion();
       }
 
       if (!this.isInBuzz) {
         // Si pas en buzz alors le timer continue
         this.questionTimeRemaining -= 1000;
-        console.log(`- --- -1 seconde : ${this.questionTimeRemaining}`);
+
+        if (this.questionTimeRemaining >= 0 && this.questionTimeRemaining % 3 === 0) {
+          this.textChannel.send(`Il reste ${this.questionTimeRemaining / 1000} secondes`);
+        }
       }
     }, 1000);
   }
@@ -180,11 +190,11 @@ module.exports = class Game {
    */
   endActiveQuestion() {
     // Clear l'interval timer de la question
-    console.log('- clear interval');
+    console.log(`(${this.activeQuestionIndex + 1}) clear interval`);
     clearInterval(this.questionInterval);
 
     // Arrete la musique si question MUSIC
-    if (this.questions[this.activeQuestionIndex].type === 'MUSIC') {
+    if (this.questions[this.activeQuestionIndex].type === 'MUSIC' && this.voiceChannelConnection && this.voiceChannelConnection.dispatcher) {
       this.voiceChannelConnection.dispatcher.end();
     }
 
@@ -200,7 +210,7 @@ module.exports = class Game {
    * https://discordjs.guide/popular-topics/embeds.html#embed-preview
    */
   displayResponse() {
-    console.log('- affichage réponse');
+    console.log(`(${this.activeQuestionIndex + 1}) affichage réponse`);
     const activeQuestion = this.questions[this.activeQuestionIndex];
     const embedResponse = {
       color: questionColors.RESPONSE,
@@ -269,21 +279,18 @@ module.exports = class Game {
    * @param {*} userId 
    */
   buzz(userId, messageId) {
-    console.log(`- Joueur ${userId} a buzzé`);
+    console.log(`(${this.activeQuestionIndex + 1}) Joueur ${userId} a buzzé`);
 
     // Le joueur est enregistré ?
     if (!(this.players.some((p) => p.userId === userId))) return;
 
     // Temps restant ?
-    console.log(`- Temps restant ? ${this.questionTimeRemaining}`);
     if (this.questionTimeRemaining <= 0) return;
 
     // Déjà en buzz ?
-    console.log(`- Déjà en buzz ? ${!!this.isInBuzz}`);
     if (!!this.isInBuzz) return;
 
     // Le joueur a t-il déjà buzzé ?
-    console.log(`- Joueur a déjà buzzé ? ${this.playersAlreadyBuzzed.includes(userId)}`);
     if (this.playersAlreadyBuzzed.includes(userId)) return;
 
     // Reaction sur la question en cours ?
@@ -305,7 +312,7 @@ module.exports = class Game {
   }
 
   buzzResponse(reaction) {
-    console.log(`- Admin reacted with : ${reaction.emoji.name}`);
+    console.log(`(${this.activeQuestionIndex + 1}) Admin reacted with : ${reaction.emoji.name}`);
 
     if (reaction.emoji.name === '🆗') {
       // Le joueur a bien répondu
