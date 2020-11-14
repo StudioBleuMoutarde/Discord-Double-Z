@@ -318,11 +318,21 @@ module.exports = class Game {
 
       // Fin de la question prématuré
       this.endActiveQuestion();
-    } else {
-      this.textChannel.send(`FAUX ! La partie reprend, il reste ${this.questionTimeRemaining / 1000} secondes`);
     }
 
-    // Si le joueur a mal répondu alors on se contente de débloquer le timer
-    this.isInBuzz = null;
+    // Suppression des réactions des joueurs sur le "buzzer"
+    this.textChannel.messages.fetch(this.questionMessageId)
+      .then((m) => {
+        m.reactions.removeAll()
+          .then(() => m.react('👍'))
+          // On débloque le timer
+          .then(() => {
+            this.isInBuzz = null;
+            this.textChannel.send(`FAUX ! La partie reprend, il reste ${this.questionTimeRemaining / 1000} secondes`);
+          });
+      })
+      .catch((err) => {
+        console.log(`error removing reactions : ${JSON.stringify(err)}`);
+      });
   }
 }
