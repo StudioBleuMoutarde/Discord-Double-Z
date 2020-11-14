@@ -327,7 +327,7 @@ module.exports = class Game {
 
       // Fin de la question prématuré
       this.endActiveQuestion();
-    } else {
+    } else if (reaction.emoji.name === '⛔') {
       // Suppression des réactions des joueurs sur le "buzzer"
       this.textChannel.messages.fetch(this.questionMessageId)
       .then((m) => {
