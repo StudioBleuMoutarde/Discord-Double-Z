@@ -70,7 +70,6 @@ client.on('ready', () => {
 // Connexion du bot au serveur
 client.login(process.env.DISCORD_TOKEN);
 
-
 /**
  * Gestion des commandes admin
  * @param {*} message 
