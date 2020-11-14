@@ -80,8 +80,18 @@ const handleAdminResponse = (message) => {
     case '!start':
       game.start();
       break;
+    case '!clear-text-channel':
+      clearTextChannel();
+      break;
     default:
       console.log('/// Commande inconnue');
       break;
   }
+};
+
+/**
+ * Supprime tous les messages du channel texte "plateau"
+ */
+const clearTextChannel = () => {
+  game.textChannel.bulkDelete(100);
 };
