@@ -1,10 +1,10 @@
 const ytdl = require('ytdl-core');
 
 const Player = require('./player');
-const questions = require('../data/questions.json');
+const questions = require('../data/test-questions.json');
 
-const questionTypes = require('../enums/question-types');
 const questionColors = require('../enums/question-colors');
+const QCMValues = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
 
 module.exports = class Game {
   constructor() {
@@ -121,10 +121,10 @@ module.exports = class Game {
     // Si on a des propositions sur la question
     let fields = [];
     if (activeQuestion.propositions && activeQuestion.propositions.length > 0) {
-      activeQuestion.propositions.forEach((proposition) => {
+      activeQuestion.propositions.forEach((proposition, index) => {
         fields.push({
           name: proposition.label,
-          value: proposition.value,
+          value: QCMValues[index],
         });
       });
     }
@@ -316,12 +316,13 @@ module.exports = class Game {
 
       this.textChannel.send(`<@${this.isInBuzz}> a trouvé la bonne réponse ! +${pointsEarned} points !`);
 
+      this.isInBuzz = null;
+
       // Fin de la question prématuré
       this.endActiveQuestion();
-    }
-
-    // Suppression des réactions des joueurs sur le "buzzer"
-    this.textChannel.messages.fetch(this.questionMessageId)
+    } else {
+      // Suppression des réactions des joueurs sur le "buzzer"
+      this.textChannel.messages.fetch(this.questionMessageId)
       .then((m) => {
         m.reactions.removeAll()
           .then(() => m.react('👍'))
@@ -334,5 +335,6 @@ module.exports = class Game {
       .catch((err) => {
         console.log(`error removing reactions : ${JSON.stringify(err)}`);
       });
+    }
   }
 }
