@@ -37,6 +37,14 @@ client.on('messageReactionAdd', async (reaction, user) => {
   }
 });
 
+client.on('messageReactionRemove', async (reaction, user) => {
+  // On ne prend pas les réactions du bot ni de l'admin
+  if (user.bot || user.id === process.env.ADMIN_ID) return;
+
+  // Joueur a buzzé
+  game.buzz(user.id, reaction.message.id);
+});
+
 // Confirmation de connexion
 client.on('ready', () => {
   console.log(`*** logged in as ${client.user.tag}`);
