@@ -1,0 +1,126 @@
+[
+  {
+    "type": "INPUT",
+    "label": "En quelle année a été construite la tour de Pise ?",
+    "hint": "A 50 ans près",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/The_Leaning_Tower_of_Pisa_SB.jpeg/260px-The_Leaning_Tower_of_Pisa_SB.jpeg",
+    "response": "1173"
+  },
+  {
+    "type": "QCM",
+    "label": "Laquelle des propositions n'est pas une des 14 merveilles du monde ?",
+    "hint": "(liste canonique et moderne)",
+    "propositions": [
+      {
+        "label": "Pyramide de Khéops"
+      },
+      {
+        "label": "Tour de Babel"
+      },
+      {
+        "label": "Colosse de Rhodes"
+      },
+      {
+        "label": "Muraille de Chine"
+      }
+    ],
+    "response": "Tour de Babel (épisode biblique)"
+  },
+  {
+    "type": "MUSIC",
+    "label": "Reconnaissez l'animal",
+    "hint": "Petit et mignon",
+    "url": "https://www.youtube.com/watch?v=SdfCXfi8rEQ",
+    "response": "Cochon d'Inde"
+  },
+  {
+    "type": "INPUT",
+    "label": "Combien a été vendu ce grafiti ?",
+    "hint": "Je me demande si le mur a été vendu avec...",
+    "propositions": [
+      {
+        "label": "110 000 000"
+      },
+      {
+        "label": "122 000 000"
+      },
+      {
+        "label": "143 000 000"
+      },
+      {
+        "label": "175 000 000"
+      }
+    ],
+    "image": "https://cdn.wealthygorilla.com/wp-content/uploads/2019/06/Most-Expensive-Paintings-Untitled-Jean-Michel-Basquiat.webp",
+    "response": "110 000 000"
+  },
+  {
+    "type": "MUSIC",
+    "label": "Reconnaissez la musique",
+    "url": "https://www.youtube.com/watch?v=XbGs_qK2PQA",
+    "response": "Eminem - Rap God"
+  },
+  {
+    "type": "MUSIC",
+    "label": "Qui parle ?",
+    "url": "https://www.youtube.com/watch?v=2Ha9GJwlus8",
+    "response": "JFK"
+  },
+  {
+    "type": "INPUT",
+    "label": "De quel produit, le Mexique est le premier producteur au monde ?",
+    "hint": "Les tortillas ne comptent pas",
+    "propositions": [
+      {
+        "label": "Canne a sucre"
+      },
+      {
+        "label": "Marijuana"
+      },
+      {
+        "label": "Avocat"
+      },
+      {
+        "label": "Papaye"
+      }
+    ],
+    "response": "Avocat"
+  },
+  {
+    "type": "INPUT",
+    "label": "Quelle est le nom du premier jeu de Psyonix ?",
+    "propositions": [
+      {
+        "label": "Supersonic Athletic Rocket-Powered Battle-Cars"
+      },
+      {
+        "label": "Super Acrobatic Rocket-Powered Battle-Cars"
+      },
+      {
+        "label": "Super Athletic Rocket-Powered Battle-Cars"
+      },
+      {
+        "label": "Supersonic Acrobatic Rocket-Powered Battle-Cars"
+      }
+    ],
+    "response": "Supersonic Acrobatic Rocket-Powered Battle-Cars"
+  },
+  {
+    "type": "INPUT",
+    "label": "Dans quel pays je suis ?",
+    "image": "https://nomadicmatt.s3.amazonaws.com/madagascarpost11.jpg",
+    "response": "Madagascar"
+  },
+  {
+    "type": "INPUT",
+    "label": "Quel est le chiffre manquant ? - 28, 56, 14, 28, 7, ?",
+    "response": "14"
+  },
+  {
+    "type": "INPUT",
+    "label": "Dans quelle ville je suis ?",
+    "hint": "On dirait la tour Eiffel non ?",
+    "image": "https://www.pandotrip.com/wp-content/uploads/2019/05/Iconic-Tokyo-Tower-at-night.jpg",
+    "response": "Tokyo"
+  }
+]
