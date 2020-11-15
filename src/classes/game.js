@@ -20,6 +20,7 @@ module.exports = class Game {
     this.playersAlreadyBuzzed = [];
 
     this.questionTimeRemaining = process.env.RESPONSE_TIME;
+    this.messageTimeRemaining = null;
     this.questionInterval = null;
     this.questionMessageId = null;
   }
@@ -103,7 +104,10 @@ module.exports = class Game {
     }
     console.log(`(${this.activeQuestionIndex + 1}) Timer a ${this.questionTimeRemaining}`);
 
-    this.questionInterval = setInterval(() => {
+    // Reset de la référence du message avec le temps restant
+    this.messageTimeRemaining = null;
+
+    this.questionInterval = setInterval(async () => {
       // Lorsque le timer atteint 0
       if (this.questionTimeRemaining <= 0) {
         console.log(`Fin question ${this.activeQuestionIndex + 1}`);
@@ -115,7 +119,11 @@ module.exports = class Game {
         this.questionTimeRemaining -= 1000;
 
         if (this.questionTimeRemaining >= 0 && this.questionTimeRemaining % 3 === 0) {
-          this.textChannel.send(`Il reste ${this.questionTimeRemaining / 1000} secondes`);
+          if (!this.messageTimeRemaining) {
+            this.messageTimeRemaining = await this.textChannel.send(`${this.questionTimeRemaining / 1000} SECONDES`);
+          } else {
+            this.messageTimeRemaining.edit(`${this.questionTimeRemaining / 1000} SECONDES`);
+          }
         }
       }
     }, 1000);
