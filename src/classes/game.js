@@ -336,6 +336,13 @@ module.exports = class Game {
       // Fin de la question prématuré
       this.endActiveQuestion();
     } else if (reaction.emoji.name === '⛔') {
+      // Si tous les joueurs ont déjà buzzé, alors fin de la question prématuré
+      if (this.playersAlreadyBuzzed.length >= this.players.length) {
+        this.isInBuzz = null;
+        this.endActiveQuestion();
+        return;
+      }
+
       // Suppression des réactions des joueurs sur le "buzzer"
       this.textChannel.messages.fetch(this.questionMessageId)
       .then((m) => {
