@@ -139,10 +139,10 @@ module.exports = class Game {
       });
     }
 
-    // Si on a une image sur la question alors on ajoute un thumbnail
-    let thumbnail = null;
+    // Si on a une image sur la question alors on ajoute une image
+    let image = null;
     if (activeQuestion.image) {
-      thumbnail = {
+      image = {
         url: activeQuestion.image,
       };
     }
@@ -170,7 +170,7 @@ module.exports = class Game {
       title: activeQuestion.label,
       ...(activeQuestion.hint && { description: `Indice : ${activeQuestion.hint}` }),
       ...(fields.length > 0 && { fields }),
-      ...(thumbnail && { thumbnail }),
+      ...(image && { image }),
     };
 
     this.textChannel.send({ embed: embedQuestion })
