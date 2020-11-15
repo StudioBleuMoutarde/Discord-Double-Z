@@ -91,3 +91,77 @@ const handleAdminResponse = (message) => {
 const clearTextChannel = () => {
   game.textChannel.bulkDelete(100);
 };
+
+const addLeaderboard = async (players) => {
+  // Récupération du message du channel "classements"
+  const chanLeaderboard = client.channels.cache.find((chan) => {
+    // regex pour le nom du channel "classements"
+    const isNameHallDesChampions = /classements/i.test(chan.name);
+
+    return chan.type === 'text' && isNameHallDesChampions;
+  });
+
+  if (chanLeaderboard) {
+    chanLeaderboard.messages.fetch({ limit: 10 })
+      .then((messages) => {
+        if (messages.size <= 0) {
+          const fields = players.map((player) => {
+            return {
+              name: `${player.username} - ${player.id}`,
+              value: `${player.score} points`,
+            };
+          });
+    
+          const embedChampions = {
+            color: '#ffff00',
+            author: {
+              name: 'Classement',
+            },
+            fields,
+          };
+          chanLeaderboard.send({ embed: embedChampions });
+        } else {
+          const msg = messages.first();
+
+          const newFields = players.map((p) => {
+            const exportedPlayer = msg.embeds[0].fields.find((f) => {
+              const fieldId = f.name.split('-')[1].trim();
+
+              return fieldId === p.id;
+            });
+
+            let score = p.score;
+            if (exportedPlayer) {
+              const exportedScore = exportedPlayer.value.split(' ')[0].trim();
+              score += +exportedScore;
+            }
+
+            return {
+              name: `${p.username} - ${p.id}`,
+              value: `${score} points`,
+            };
+          });
+
+          // Tri des joueurs par score
+          const sortedFields = newFields.sort((a, b) => {
+            const aScore = +a.value.split(' ')[0].trim();
+            const bScore = +b.value.split(' ')[0].trim();
+
+            return bScore - aScore;
+          });
+
+          const updateEmbed = {
+            color: '#ffff00',
+            author: {
+              name: 'Classement',
+            },
+            fields: sortedFields,
+          };
+          // Modification du classement
+          msg.edit({ embed: updateEmbed });
+        }
+      });
+  }
+};
+
+module.exports.addLeaderboard = addLeaderboard;

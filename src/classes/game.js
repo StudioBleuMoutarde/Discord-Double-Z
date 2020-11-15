@@ -1,6 +1,7 @@
 const ytdl = require('ytdl-core');
 
 const Player = require('./player');
+const main = require('../main');
 const questions = require('../data/test-questions.json');
 
 const questionColors = require('../enums/question-colors');
@@ -280,6 +281,16 @@ module.exports = class Game {
       fields,
     };
     this.textChannel.send({ embed: embedResults });
+
+    // Ajout au Classement général
+    const resultPlayers = sortedPlayers.map((p) => {
+      return {
+        id: p.id,
+        username: player.username,
+        score: player.score,
+      };
+    });
+    main.addLeaderboard(resultPlayers);
   };
 
   /**
