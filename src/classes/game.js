@@ -3,7 +3,7 @@ const path = require('path');
 
 const Player = require('./player');
 const main = require('../main');
-const questions = require('../data/test-questions.json');
+const questions = require('../data/202011-questions.json');
 
 const questionColors = require('../enums/question-colors');
 const QCMValues = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
@@ -27,7 +27,7 @@ module.exports = class Game {
     this.textChannel = null;
     this.players = [];
     this.startedAt = new Date();
-    this.questions = questions;
+    this.questions = this.shuffle(questions);
     this.activeQuestionIndex = 0;
 
     this.isInBuzz = null;
