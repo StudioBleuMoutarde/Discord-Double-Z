@@ -76,7 +76,7 @@ const handleAdminResponse = (message) => {
     case '!start':
       game.start();
       break;
-    case '!clear-text-channel':
+    case '!clear':
       clearTextChannel();
       break;
     default:
