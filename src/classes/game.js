@@ -275,11 +275,26 @@ module.exports = class Game {
   };
 
   end() {
+    // Son de fin de partie
+    const applauseSoundPath = path.join(__dirname, '../assets/applause.mp3');
+      this.voiceChannelConnection
+        .play(
+          applauseSoundPath,
+          {
+            volume: 0.75,
+          }
+        )
+        .on('end', () => {
+          // Quitter le channel vocal
+          this.voiceChannel.leave();
+        })
+        .on('error', () => {
+          // Quitter le channel vocal
+          this.voiceChannel.leave();
+        });
+
     console.log('*** Fin de partie');
     this.displayResults();
-
-    // Quitter le channel vocal
-    this.voiceChannel.leave();
   };
 
   /**
