@@ -1,4 +1,5 @@
 const ytdl = require('ytdl-core');
+const path = require('path');
 
 const Player = require('./player');
 const main = require('../main');
@@ -6,6 +7,18 @@ const questions = require('../data/test-questions.json');
 
 const questionColors = require('../enums/question-colors');
 const QCMValues = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+const buzzerSoundsOriginals = [
+  '../assets/buzzer-caisse-argent.mp3',
+  '../assets/buzzer-couic-mignon.mp3',
+  '../assets/buzzer-coup-poing.mp3',
+  '../assets/buzzer-ding.mp3',
+  '../assets/buzzer-macron.mp3',
+  '../assets/buzzer-maijurp-ela.mp3',
+  '../assets/buzzer-mgs.mp3',
+  '../assets/buzzer-pet.mp3',
+  '../assets/buzzer-sardoche-cetait-sur.mp3',
+];
+let buzzerSounds = [];
 
 module.exports = class Game {
   constructor() {
@@ -26,6 +39,16 @@ module.exports = class Game {
     this.questionMessageId = null;
   }
 
+  shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+  
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  
+    return arr;
+  };
+
   /**
    * Débute une partie
    * - Enregistre les joueurs présents dans le channel vocal "Plateau"
@@ -33,6 +56,9 @@ module.exports = class Game {
    */
   async start() {
     this.textChannel.send('La partie va commencer !');
+
+    // Mélange des sons buzzer
+    buzzerSounds = this.shuffle(buzzerSoundsOriginals);
 
     // Recherche des joueurs dans le channel vocal
     this.registerPlayers();
@@ -301,7 +327,8 @@ module.exports = class Game {
     console.log(`(${this.activeQuestionIndex + 1}) Joueur ${userId} a buzzé`);
 
     // Le joueur est enregistré ?
-    if (!(this.players.some((p) => p.userId === userId))) return;
+    const playerIndex = this.players.findIndex((p) => p.userId === userId);
+    if (playerIndex < 0) return;
 
     // Temps restant ?
     if (this.questionTimeRemaining <= 0) return;
@@ -320,6 +347,21 @@ module.exports = class Game {
 
     // Ajout à la liste des joueurs ayant déjà buzzé
     this.playersAlreadyBuzzed.push(userId);
+
+    // Son de buzzer si pas question MUSIC
+    if (this.questions[this.activeQuestionIndex].type !== 'MUSIC') {
+      const buzzerSoundPath = path.join(__dirname, buzzerSounds[playerIndex]);
+      this.voiceChannelConnection
+        .play(
+          buzzerSoundPath,
+          {
+            volume: 0.9,
+          }
+        )
+        .on('error', (error) => {
+          this.textChannel.send(`Erreur lors de la lecture du buzzer : ${JSON.stringify(error)}`);
+        });
+    }
 
     // Message pour savoir qui a buzzé
     this.textChannel.send(`<@${userId}> A buzzé !`)
