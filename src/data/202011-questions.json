@@ -1,6 +1,12 @@
 [
   {
     "type": "INPUT",
+    "label": "Combien de pommes rouges sur l'image ?",
+    "image": "https://thumbs.dreamstime.com/z/counting-educational-children-game-kids-activity-how-many-objects-task-sheet-learning-mathematics-numbers-addition-theme-74429935.jpg",
+    "response": "9"
+  },
+  {
+    "type": "INPUT",
     "label": "Pourquoi cet oeuf est célèbre ?",
     "hint": "Regardez bien la photo...",
     "image": "https://s14415.pcdn.co/wp-content/uploads/2019/01/egg-header.png",
@@ -26,12 +32,6 @@
     "hint": "C'est écrit dessus",
     "image": "http://store.x-plane.org/assets/images/files/peterhager/320neo/01.jpg",
     "response": "A320"
-  },
-  {
-    "type": "MUSIC",
-    "label": "Qui parle ?",
-    "url": "https://www.youtube.com/watch?v=a1r8Ad6nFSA",
-    "response": "Emmanuel Macron"
   },
   {
     "type": "INPUT",
@@ -307,12 +307,6 @@
       }
     ],
     "response": "91 000 000$"
-  },
-  {
-    "type": "INPUT",
-    "label": "Quelle est cette peinture ?",
-    "image": "https://www.vinci-closluce.com/file/image/aGFuZGxlcj1maWxsJndpZHRoPTE4MDA=/h2_1437394131.jpg",
-    "response": "La cène - Leonard de Vinci"
   },
   {
     "type": "MUSIC",
@@ -609,8 +603,7 @@
   },
   {
     "type": "INPUT",
-    "label": "Je suis un mollusque marin. On peut me trouver dans toutes les mers du monde. Je m'installe au fond des mers et je forme des mini-récifs biogéniques, oasis de biodiversité favorable à d'autres organismes vivants. Je fais partie de la famille des ostreidae. L'ostréiculture est le nom donné à l'élevage de mes pairs pour consommation humaine.",
-    "hint": "Bon si avec ça vous l'avez pas...",
+    "label": "Je suis un mollusque marin, de la famille des ostreidae, l'ostréiculture est le nom donné à mon élevage",
     "response": "Huitre"
   },
   {
@@ -691,12 +684,6 @@
     "label": "Trouvez la carcasse de poisson",
     "image": "https://www.puzzleprime.com/wp-content/uploads/2020/04/Hidden-Objects-Pets-2-scaled.jpg",
     "response": "Livre en haut a gauche"
-  },
-  {
-    "type": "INPUT",
-    "label": "Combien de papillons sur l'image ?",
-    "image": "https://www.puzzleprime.com/wp-content/uploads/2018/04/bunny-in-easter-eggs-puzzle.jpg",
-    "response": "8"
   },
   {
     "type": "INPUT",
