@@ -73,6 +73,8 @@ module.exports = class Game {
       this.voiceChannel.leave();
     }
 
+    this.textChannel.send('Bonjour à tous, je suis le vrai Samuel Etienne', { tts: true });
+
     // Décompte de début de partie
     this.countdown();
   };
@@ -189,7 +191,7 @@ module.exports = class Game {
         .play(
           ytdl(activeQuestion.url),
           {
-            volume: 0.1,
+            volume: 0.07,
           }
         )
         .on('error', (error) => {
