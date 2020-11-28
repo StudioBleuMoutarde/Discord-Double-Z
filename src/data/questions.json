@@ -3,7 +3,15 @@
     "type": "INPUT",
     "label": "De quelle couleur est le cheval blanc d'Henri IV ?",
     "hint": "C'est pas blanc",
-    "response": "blanc"
+    "propositions": [
+      {
+        "label": "Noir"
+      },
+      {
+        "label": "Blanc"
+      }
+    ],
+    "response": "Blanc bien sur"
   },
   {
     "type": "IMAGE",
@@ -13,32 +21,10 @@
     "response": "test"
   },
   {
-    "type": "QCM",
-    "label": "Le meilleur joueur sur Biped ?",
-    "hint": "C'est pas Jakchira",
-    "propositions": [
-      {
-        "label": "Jakchira",
-        "value": "1"
-      },
-      {
-        "label": "JB",
-        "value": "2"
-      }
-    ],
-    "response": "2"
-  },
-  {
     "type": "MUSIC",
     "label": "Reconnaissez la musique",
     "response": "Rick Astley - Never gonna give you up",
     "hint": "Un classique",
     "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO"
-  },
-  {
-    "type": "INPUT",
-    "label": "Question 1 ?",
-    "hint": "test",
-    "response": "test"
   }
 ]
