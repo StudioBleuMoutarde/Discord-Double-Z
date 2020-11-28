@@ -335,9 +335,9 @@ module.exports = class Game {
     // Ajout au Classement général
     const resultPlayers = sortedPlayers.map((p) => {
       return {
-        id: p.id,
-        username: player.username,
-        score: player.score,
+        id: p.userId,
+        username: p.username,
+        score: p.score,
       };
     });
     main.addLeaderboard(resultPlayers);
