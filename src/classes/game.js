@@ -64,7 +64,9 @@ module.exports = class Game {
       this.voiceChannel.leave();
     }
 
-    this.textChannel.send('Bonjour à tous, je suis le vrai Samuel Etienne', { tts: true });
+    if (process.env.ENVIRONMENT !== 'development') {
+      this.textChannel.send('Bonjour à tous, je suis le vrai Samuel Etienne', { tts: true });
+    }
   };
 
   /**
@@ -196,7 +198,7 @@ module.exports = class Game {
         .play(
           ytdl(activeQuestion.url),
           {
-            volume: 0.07,
+            volume: 0.09,
           }
         )
         .on('error', (error) => {
@@ -434,4 +436,24 @@ module.exports = class Game {
       });
     }
   }
+
+  testAudio() {
+    if (!this.voiceChannelConnection) {
+      this.textChannel.send('Pas de référence pour le salon vocal');
+      return;
+    }
+
+    // Lancer la musique
+    this.voiceChannelConnection
+      .play(
+        ytdl('https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO'),
+        {
+          quality: 'highestaudio',
+          volume: 0.1,
+        }
+      )
+      .on('error', (error) => {
+        console.log(`error : ${JSON.stringify(error)}`);
+      });
+  };
 }

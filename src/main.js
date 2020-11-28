@@ -87,6 +87,9 @@ const handleAdminResponse = (message) => {
     case '!register':
       game.registerPlayers();
       break;
+    case '!play':
+      game.testAudio();
+      break;
     default:
       console.log('/// Commande inconnue');
       break;
