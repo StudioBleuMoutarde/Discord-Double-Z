@@ -7,6 +7,7 @@ const Game = require('./classes/game');
 const game = new Game();
 
 const channelName = process.env.ENVIRONMENT === 'development' ? /test/i : /plateau/i;
+const channelLeaderboard = process.env.ENVIRONMENT === 'development' ? /classementss/i : /classements/i;
 
 // Réception d'un message
 client.on('message', (message) => {
@@ -107,9 +108,9 @@ const addLeaderboard = async (players) => {
   // Récupération du message du channel "classements"
   const chanLeaderboard = client.channels.cache.find((chan) => {
     // regex pour le nom du channel "classements"
-    const isNameHallDesChampions = /classements/i.test(chan.name);
+    const isNameLeaderboard = channelLeaderboard.test(chan.name);
 
-    return chan.type === 'text' && isNameHallDesChampions;
+    return chan.type === 'text' && isNameLeaderboard;
   });
 
   if (chanLeaderboard) {
@@ -134,22 +135,44 @@ const addLeaderboard = async (players) => {
         } else {
           const msg = messages.first();
 
-          const newFields = players.map((p) => {
-            const exportedPlayer = msg.embeds[0].fields.find((f) => {
-              const fieldId = f.name.split('-')[1].trim();
-
-              return fieldId === p.id;
-            });
-
-            let score = p.score;
-            if (exportedPlayer) {
-              const exportedScore = exportedPlayer.value.split(' ')[0].trim();
-              score += +exportedScore;
-            }
+          // Joueurs dans le classement actuel
+          let current = msg.embeds[0].fields.map((field) => {
+            const [username, id] = field.name.split('-');
+            const score = field.value.split(' ')[0].trim();
 
             return {
+              id: id.trim(),
+              username: username.trim(),
+              score: +score,
+            }
+          });
+
+          // Regroupement des scores actuels et nouveaux scores
+          const rest = players.filter((c) => {
+            const isPlayerAlreadyInLeaderboard = current.find((f) => f.id === c.id);
+
+            if (isPlayerAlreadyInLeaderboard) {
+              current = current.map((curr) => {
+                if (curr.id === c.id) {
+                  return {
+                    ...curr,
+                    score: curr.score + isPlayerAlreadyInLeaderboard.score,
+                  }
+                }
+                return curr;
+              });
+            }
+
+            return !isPlayerAlreadyInLeaderboard;
+          });
+
+          // Classement final
+          const finalLeaderboard = [...rest, ...current];
+
+          const newFields = finalLeaderboard.map((p) => {
+            return {
               name: `${p.username} - ${p.id}`,
-              value: `${score} points`,
+              value: `${p.score} points`,
             };
           });
 
