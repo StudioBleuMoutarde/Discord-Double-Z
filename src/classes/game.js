@@ -27,7 +27,7 @@ module.exports = class Game {
     this.textChannel = null;
     this.players = [];
     this.startedAt = new Date();
-    this.questions = this.shuffle(questions);
+    this.questions = questions;
     this.activeQuestionIndex = 0;
 
     this.isInBuzz = null;
