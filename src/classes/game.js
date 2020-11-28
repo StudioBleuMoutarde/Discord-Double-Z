@@ -128,6 +128,9 @@ module.exports = class Game {
    * 3 - On affiche la réponse
    */
   gameLoop() {
+    // Affichage score
+    this.displayScores();
+
     // Affichage question active
     console.log(`Init question ${this.activeQuestionIndex + 1}`);
     this.initActiveQuestion();
@@ -436,6 +439,12 @@ module.exports = class Game {
       });
     }
   }
+
+  displayScores() {
+    const scores = this.players.map((p) => `${p.username} a ${p.score} points`);
+    
+    this.textChannel.send(scores.join(' // '));
+  };
 
   testAudio() {
     if (!this.voiceChannelConnection) {
