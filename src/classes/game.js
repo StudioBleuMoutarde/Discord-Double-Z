@@ -3,7 +3,7 @@ const path = require('path');
 
 const Player = require('./player');
 const main = require('../main');
-const questions = require('../data/202011-questions.json');
+const questions = require('../data/questions.json');
 
 const questionColors = require('../enums/question-colors');
 const QCMValues = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
@@ -50,19 +50,10 @@ module.exports = class Game {
   };
 
   /**
-   * Débute une partie
-   * - Enregistre les joueurs présents dans le channel vocal "Plateau"
-   * - Lance un décompte de 3s avant la première question
+   * Rejoint le channel vocal
+   * Parle en tts
    */
-  async start() {
-    this.textChannel.send('La partie va commencer !');
-
-    // Mélange des sons buzzer
-    buzzerSounds = this.shuffle(buzzerSoundsOriginals);
-
-    // Recherche des joueurs dans le channel vocal
-    this.registerPlayers();
-
+  async joinVocal() {
     // Le bot rejoint le channel vocal
     this.voiceChannelConnection = await this.voiceChannel.join();
 
@@ -74,33 +65,47 @@ module.exports = class Game {
     }
 
     this.textChannel.send('Bonjour à tous, je suis le vrai Samuel Etienne', { tts: true });
-
-    // Décompte de début de partie
-    this.countdown();
   };
 
   /**
-   * Enregistre les joueurs présents dans le channel vocal "Plateau"
+   * Enregistre les joueurs présents dans le channel vocal
    * en créant des objets Player avec la référence de "member"
    * https://discord.js.org/#/docs/main/stable/class/GuildMember
    */
   registerPlayers() {
+    if (!this.voiceChannelConnection) {
+      this.textChannel.send('Je n\'ai pas encore rejoint de salon vocal !');
+      return;
+    }
+
+    // Reset de la liste des joueurs
+    this.players = [];
+
     // Recherche des joueurs dans le channel vocal
     this.voiceChannel.members.forEach((member) => {
       // Ne pas s'enregistrer soi, ni le bot
       if (!member.user.bot && member.user.id !== process.env.ADMIN_ID) {
         this.players.push(new Player(member.user.username, member.user.id));
-        this.textChannel.send(`* ${member.displayName} enregistré`);
+        this.textChannel.send(`* ${member.user.username} enregistré`);
       }
     });
+
+    // Mélange des sons buzzer
+    buzzerSounds = this.shuffle(buzzerSoundsOriginals);
   };
 
   /**
-   * Lance un décompte de 3s en affichant le temps restant
-   * 
-   * Lance la boucle de jeu à la fin du décompte
+   * Débute une partie
+   * - Enregistre les joueurs présents dans le channel vocal "Plateau"
+   * - Lance un décompte de 3s avant la première question
    */
-  countdown() {
+  async start() {
+    if (this.players.length <= 0) {
+      this.textChannel.send('0 joueurs enregistrés. Je ne suis pas payé pour présenter une émission sans candidats !');
+      return;
+    }
+
+    // Décompte de début de partie
     let countdown = process.env.START_COUNTDOWN_MS / 1000;
     const countdownInterval = setInterval(() => {
       this.textChannel.send(`La partie commence dans ${countdown - 1} !`);

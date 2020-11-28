@@ -81,6 +81,12 @@ const handleAdminResponse = (message) => {
     case '!clear':
       clearTextChannel();
       break;
+    case '!join':
+      game.joinVocal();
+      break;
+    case '!register':
+      game.registerPlayers();
+      break;
     default:
       console.log('/// Commande inconnue');
       break;
