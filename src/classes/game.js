@@ -379,7 +379,7 @@ module.exports = class Game {
         .play(
           buzzerSoundPath,
           {
-            volume: 0.9,
+            volume: 1.55,
           }
         )
         .on('error', (error) => {
