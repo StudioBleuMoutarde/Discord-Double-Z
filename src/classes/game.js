@@ -36,7 +36,6 @@ module.exports = class Game {
     this.questionTimeRemaining = process.env.RESPONSE_TIME;
     this.messageTimeRemaining = null;
     this.questionInterval = null;
-    this.questionMessageId = null;
   }
 
   shuffle(arr) {
@@ -98,7 +97,6 @@ module.exports = class Game {
 
   /**
    * Débute une partie
-   * - Enregistre les joueurs présents dans le channel vocal "Plateau"
    * - Lance un décompte de 3s avant la première question
    */
   async start() {
@@ -220,13 +218,7 @@ module.exports = class Game {
       ...(image && { image }),
     };
 
-    this.textChannel.send({ embed: embedQuestion })
-      .then((msg) => {
-        this.questionMessageId = msg.id;
-
-        // Ajout de réactions
-        msg.react('👍');
-      });
+    this.textChannel.send({ embed: embedQuestion });
   };
 
   /**
@@ -350,7 +342,7 @@ module.exports = class Game {
    * Gestion du buzz d'un joueur
    * @param {*} userId 
    */
-  buzz(userId, messageId) {
+  buzz(userId) {
     console.log(`(${this.activeQuestionIndex + 1}) Joueur ${userId} a buzzé`);
 
     // Le joueur est enregistré ?
@@ -366,33 +358,30 @@ module.exports = class Game {
     // Le joueur a t-il déjà buzzé ?
     if (this.playersAlreadyBuzzed.includes(userId)) return;
 
-    // Reaction sur la question en cours ?
-    if (this.questionMessageId !== messageId) return;
-
     // Indication que état a BUZZ
     this.isInBuzz = userId;
 
     // Ajout à la liste des joueurs ayant déjà buzzé
     this.playersAlreadyBuzzed.push(userId);
 
-    // Son de buzzer si pas question MUSIC
-    if (this.questions[this.activeQuestionIndex].type !== 'MUSIC') {
-      const buzzerSoundPath = path.join(__dirname, buzzerSounds[playerIndex]);
-      this.voiceChannelConnection
-        .play(
-          buzzerSoundPath,
-          {
-            volume: 1.55,
-          }
-        )
-        .on('error', (error) => {
-          this.textChannel.send(`Erreur lors de la lecture du buzzer : ${JSON.stringify(error)}`);
-        });
-    }
-
     // Message pour savoir qui a buzzé
     this.textChannel.send(`<@${userId}> A buzzé !`)
       .then((msg) => {
+        // Son de buzzer si pas question MUSIC
+        if (this.questions[this.activeQuestionIndex].type !== 'MUSIC') {
+          const buzzerSoundPath = path.join(__dirname, buzzerSounds[playerIndex]);
+          this.voiceChannelConnection
+            .play(
+              buzzerSoundPath,
+              {
+                volume: 1.4,
+              }
+            )
+            .on('error', (error) => {
+              this.textChannel.send(`Erreur lors de la lecture du buzzer : ${JSON.stringify(error)}`);
+            });
+        }
+
         // Ajout de réactions
         msg.react('🆗')
           .then(() => msg.react('⛔'));
@@ -422,21 +411,6 @@ module.exports = class Game {
         this.endActiveQuestion();
         return;
       }
-
-      // Suppression des réactions des joueurs sur le "buzzer"
-      this.textChannel.messages.fetch(this.questionMessageId)
-      .then((m) => {
-        m.reactions.removeAll()
-          .then(() => m.react('👍'))
-          // On débloque le timer
-          .then(() => {
-            this.isInBuzz = null;
-            this.textChannel.send(`FAUX ! La partie reprend, il reste ${this.questionTimeRemaining / 1000} secondes`);
-          });
-      })
-      .catch((err) => {
-        console.log(`error removing reactions : ${JSON.stringify(err)}`);
-      });
     }
   }
 

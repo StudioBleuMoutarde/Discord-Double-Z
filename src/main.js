@@ -17,10 +17,12 @@ client.on('message', (message) => {
   // Seulement les messages du channel text Plateau
   if (message.channel.type !== 'text' && !channelName.test(message.channel.name)) return;
 
-  // Seulement les messages de l'admin
   if (message.author.id === process.env.ADMIN_ID) {
     // Si admin parle
     handleAdminResponse(message);
+  } else {
+    // Joueur a buzzé
+    game.buzz(message.author.id);
   }
 });
 
@@ -31,19 +33,19 @@ client.on('messageReactionAdd', async (reaction, user) => {
   if (user.id === process.env.ADMIN_ID) {
     // Admin a décidé du résultat d'une question
     game.buzzResponse(reaction);
-  } else {
+  } /* else {
     // Joueur a buzzé
     game.buzz(user.id, reaction.message.id);
-  }
+  } */
 });
 
-client.on('messageReactionRemove', async (reaction, user) => {
+/* client.on('messageReactionRemove', async (reaction, user) => {
   // On ne prend pas les réactions du bot ni de l'admin
   if (user.bot || user.id === process.env.ADMIN_ID) return;
 
   // Joueur a buzzé
   game.buzz(user.id, reaction.message.id);
-});
+}); */
 
 // Confirmation de connexion
 client.on('ready', () => {
