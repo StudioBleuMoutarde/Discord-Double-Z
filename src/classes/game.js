@@ -239,9 +239,6 @@ module.exports = class Game {
 
     // Affichage réponse
     this.displayResponse();
-
-    // Décompte avant prochaine question
-    setTimeout(() => this.nextQuestion(), process.env.DISPLAY_RESPONE_TIME);
   };
 
   /**
@@ -255,7 +252,11 @@ module.exports = class Game {
       color: questionColors.RESPONSE,
       title: `${activeQuestion.label} : ${activeQuestion.response}`,
     };
-    this.textChannel.send({ embed: embedResponse });
+    this.textChannel.send({ embed: embedResponse })
+      .then((msg) => {
+        // Ajout de réactions pour passer à la question suivante
+        msg.react('⏭️');
+      });
   };
 
   /**
@@ -411,6 +412,10 @@ module.exports = class Game {
         this.endActiveQuestion();
         return;
       }
+    } else if (reaction.emoji.name === '⏭️') {
+      // Passe à la question suivante
+      // Décompte avant prochaine question
+      setTimeout(() => this.nextQuestion(), process.env.DISPLAY_RESPONE_TIME);
     }
   }
 
