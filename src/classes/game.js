@@ -33,7 +33,7 @@ module.exports = class Game {
     this.isInBuzz = null;
     this.playersAlreadyBuzzed = [];
 
-    this.questionTimeRemaining = process.env.RESPONSE_TIME;
+    this.questionTimeRemaining = 0;
     this.messageTimeRemaining = null;
     this.questionInterval = null;
   }
@@ -255,7 +255,8 @@ module.exports = class Game {
     this.textChannel.send({ embed: embedResponse })
       .then((msg) => {
         // Ajout de réactions pour passer à la question suivante
-        msg.react('⏭️');
+        msg.react('⏭️')
+          .then(() => msg.react('🏆'));
       });
   };
 
@@ -401,8 +402,6 @@ module.exports = class Game {
 
       this.textChannel.send(`<@${this.isInBuzz}> a trouvé la bonne réponse ! +${pointsEarned} points !`);
 
-      this.isInBuzz = null;
-
       // Fin de la question prématuré
       this.endActiveQuestion();
     } else if (reaction.emoji.name === '⛔') {
@@ -413,8 +412,21 @@ module.exports = class Game {
         return;
       }
     } else if (reaction.emoji.name === '⏭️') {
+      this.isInBuzz = null;
+
       // Passe à la question suivante
       // Décompte avant prochaine question
+      setTimeout(() => this.nextQuestion(), process.env.DISPLAY_RESPONE_TIME);
+    } else if (reaction.emoji.name === '🏆' && !!this.isInBuzz) {
+      // Recherche du membre
+      const player = this.players.find((player) => player.userId === this.isInBuzz);
+
+      // Incrémente le score du joueur de +1 pour la question bonus
+      player.incrementScore(1);
+
+      this.isInBuzz = null;
+
+      // Passe à la question suivante
       setTimeout(() => this.nextQuestion(), process.env.DISPLAY_RESPONE_TIME);
     }
   }
