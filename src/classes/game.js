@@ -15,7 +15,7 @@ const buzzerSoundsOriginals = [
   '../assets/manque-talent.mp3',
   '../assets/mer-noire.mp3',
   '../assets/mrflap-doigt.mp3',
-  '../assets/oui-oui-oui-oui-oui.mp3',
+  '../assets/buzzer-couic-mignon',
   '../assets/salut-petits-chats.mp3',
 ];
 let buzzerSounds = [];
@@ -194,17 +194,31 @@ module.exports = class Game {
 
     // Pour les questions musique, on lance la musique
     if (activeQuestion.type === 'MUSIC') {
-      // Lancer la musique
-      this.voiceChannelConnection
-        .play(
-          ytdl(activeQuestion.url),
-          {
-            volume: 0.09,
-          }
-        )
-        .on('error', (error) => {
-          this.textChannel.send(`Erreur lors de la lecture de la musique : ${JSON.stringify(error)}`);
-        });
+      if (activeQuestion.url.includes('assets/')) {
+        // Lancer la musique
+        this.voiceChannelConnection
+          .play(
+            path.join(__dirname, activeQuestion.url),
+            {
+              volume: 0.95,
+            }
+          )
+          .on('error', (error) => {
+            console.log(`error : ${JSON.stringify(error)}`);
+          });
+      } else {
+        // Lancer la musique
+        this.voiceChannelConnection
+          .play(
+            ytdl(activeQuestion.url), 
+            {
+              volume: 0.09,
+            }
+          )
+          .on('error', (error) => {
+            this.textChannel.send(`Erreur lors de la lecture de la musique : ${JSON.stringify(error)}`);
+          });
+      }
     }
 
     const embedQuestion = {
@@ -376,7 +390,7 @@ module.exports = class Game {
             .play(
               buzzerSoundPath,
               {
-                volume: 1.4,
+                volume: 1.15,
               }
             )
             .on('error', (error) => {
@@ -444,12 +458,14 @@ module.exports = class Game {
     }
 
     // Lancer la musique
+    const localSound = path.join(__dirname, '../assets/questions/accent-italian.mp3');
+    console.log(`localSound : "${localSound}"`);
+
     this.voiceChannelConnection
       .play(
-        ytdl('https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO'),
+        localSound,
         {
-          quality: 'highestaudio',
-          volume: 0.1,
+          volume: 0.7,
         }
       )
       .on('error', (error) => {
