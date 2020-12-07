@@ -8,15 +8,15 @@ const questions = require('../data/questions.json');
 const questionColors = require('../enums/question-colors');
 const QCMValues = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
 const buzzerSoundsOriginals = [
-  '../assets/buzzer-caisse-argent.mp3',
-  '../assets/buzzer-couic-mignon.mp3',
-  '../assets/buzzer-coup-poing.mp3',
-  '../assets/buzzer-ding.mp3',
+  '../assets/baby-triple.mp3',
   '../assets/buzzer-macron.mp3',
   '../assets/buzzer-maijurp-ela.mp3',
-  '../assets/buzzer-mgs.mp3',
-  '../assets/buzzer-pet.mp3',
   '../assets/buzzer-sardoche-cetait-sur.mp3',
+  '../assets/manque-talent.mp3',
+  '../assets/mer-noire.mp3',
+  '../assets/mrflap-doigt.mp3',
+  '../assets/oui-oui-oui-oui-oui.mp3',
+  '../assets/salut-petits-chats.mp3',
 ];
 let buzzerSounds = [];
 
@@ -208,7 +208,7 @@ module.exports = class Game {
     }
 
     const embedQuestion = {
-      color: questionColors[activeQuestion.type],
+      color: questionColors.INPUT,
       author: {
         name: `(${this.activeQuestionIndex + 1} / ${this.questions.length})  +${activeQuestion.points || 1} points`,
       },
