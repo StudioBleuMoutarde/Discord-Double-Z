@@ -1,6 +1,49 @@
 [
   {
     "type": "INPUT",
+    "theme": "TEST",
+    "points": 0,
+    "label": "En quelle année a été construite la tour de Pise ?",
+    "hint": "C'est BEAUCOUP plus tôt que ce que vous pensez",
+    "image": "https://s2.qwant.com/thumbr/0x380/f/2/6a69463d0071fd2bcac3581c69f37bd0bc2dac2d064ae5f2220227e7f0c8ba/img_2308.jpg?u=https%3A%2F%2Fjaspasjourney.files.wordpress.com%2F2015%2F11%2Fimg_2308.jpg&q=0&b=1&p=0&a=1",
+    "propositions": [
+      {
+        "label": "-233"
+      },
+      {
+        "label": "0"
+      },
+      {
+        "label": "1173"
+      },
+      {
+        "label": "1884"
+      }
+    ],
+    "bonus": "",
+    "response": "1173"
+  },
+  {
+    "type": "MUSIC",
+    "theme": "TEST",
+    "points": 0,
+    "label": "Reconnaissez la musique",
+    "hint": "#Confinement #Deception #SouviensToiDuTitreFDP",
+    "url": "https://www.youtube.com/watch?v=Hge4G7wdpbk",
+    "bonus": "",
+    "response": "Freddy Gladieux - Vive Les Promeneurs"
+  },
+  {
+    "type": "MUSIC",
+    "theme": "TEST",
+    "points": 0,
+    "label": "Qui parle ?",
+    "url": "../assets/questions/test-kad-olivier.mp3",
+    "bonus": "",
+    "response": "Kad & Olivier"
+  },
+  {
+    "type": "INPUT",
     "theme": "LANGUES",
     "points": 2,
     "label": "Complétez cette phrase \"Cómo está en la [...]\"",
@@ -782,428 +825,484 @@
     "response": "TLDR : dans une taverne, une histoire de saucisson"
   },
   {
-    "type": "INPUT MUSIC",
-    "theme": "LANGUES",
+    "type": "INPUT",
+    "theme": "JEUX VIDEOS INDE",
     "points": 2,
-    "label": "label",
-    "hint": "hint",
-    "image": "url_image",
-    "url": "music_url",
+    "label": "Dans quel jeu incarne t-on un jeune homme qui reçoit des messages téléphoniques pour aller tuer des gens ?",
+    "hint": "Masque de coq",
     "propositions": [
       {
-        "label": "label1"
+        "label": "Katana Zero"
       },
       {
-        "label": "label2"
+        "label": "Not a Hero"
       },
       {
-        "label": "label3"
+        "label": "Streets of Rogue"
       },
       {
-        "label": "label4"
+        "label": "Hotline Miami"
       }
     ],
-    "bonus": "bonus",
-    "response": "response"
+    "bonus": "",
+    "response": "Hotline Miami"
   },
   {
-    "type": "INPUT MUSIC",
-    "theme": "LANGUES",
+    "type": "INPUT",
+    "theme": "JEUX VIDEOS INDE",
     "points": 2,
-    "label": "label",
-    "hint": "hint",
-    "image": "url_image",
-    "url": "music_url",
-    "propositions": [
-      {
-        "label": "label1"
-      },
-      {
-        "label": "label2"
-      },
-      {
-        "label": "label3"
-      },
-      {
-        "label": "label4"
-      }
-    ],
-    "bonus": "bonus",
-    "response": "response"
+    "label": "De quel jeu est tiré cette image ?",
+    "hint": "ACHTUNG DIE KURVE",
+    "image": "https://assets.funnygames.fr/2/24272/78511/curve-fever-1-screenshot-1.jpg",
+    "bonus": "",
+    "response": "Curve Fever"
   },
   {
-    "type": "INPUT MUSIC",
-    "theme": "LANGUES",
+    "type": "MUSIC",
+    "theme": "JEUX VIDEOS INDE",
     "points": 2,
-    "label": "label",
-    "hint": "hint",
-    "image": "url_image",
-    "url": "music_url",
-    "propositions": [
-      {
-        "label": "label1"
-      },
-      {
-        "label": "label2"
-      },
-      {
-        "label": "label3"
-      },
-      {
-        "label": "label4"
-      }
-    ],
-    "bonus": "bonus",
-    "response": "response"
+    "label": "De quel jeu est tiré cette musique ?",
+    "hint": "offre en or, no noob",
+    "url": "https://www.youtube.com/watch?v=axboKEGaP-E",
+    "bonus": "",
+    "response": "Dofus 1.26"
   },
   {
-    "type": "INPUT MUSIC",
-    "theme": "LANGUES",
+    "type": "INPUT",
+    "theme": "JEUX VIDEOS INDE",
     "points": 2,
-    "label": "label",
-    "hint": "hint",
-    "image": "url_image",
-    "url": "music_url",
+    "label": "Dans \"Super Meat Boy\" comment s'appelle la petite amie du héros principal ?",
+    "hint": "C'est elle sur la photo",
+    "image": "https://vignette.wikia.nocookie.net/supermeatboy/images/f/f6/BandageGirlArtwork.png/revision/latest/scale-to-width-down/310?cb=20121211205320",
     "propositions": [
       {
-        "label": "label1"
+        "label": "Dr. Fetus"
       },
       {
-        "label": "label2"
+        "label": "Bandage Girl"
       },
       {
-        "label": "label3"
+        "label": "Meat Girl"
       },
       {
-        "label": "label4"
+        "label": "Rosine"
       }
     ],
-    "bonus": "bonus",
-    "response": "response"
+    "bonus": "",
+    "response": "Bandage Girl"
   },
   {
-    "type": "INPUT MUSIC",
-    "theme": "LANGUES",
+    "type": "INPUT",
+    "theme": "JEUX VIDEOS INDE",
     "points": 2,
-    "label": "label",
-    "hint": "hint",
-    "image": "url_image",
-    "url": "music_url",
+    "label": "Quelle plateforme est l'une des plus importantes dans la diffusion de jeux indés ?",
     "propositions": [
       {
-        "label": "label1"
+        "label": "itch.io"
       },
       {
-        "label": "label2"
+        "label": "Epic Games"
       },
       {
-        "label": "label3"
+        "label": "La Française des jeux"
       },
       {
-        "label": "label4"
+        "label": "Metacritic"
       }
     ],
-    "bonus": "bonus",
-    "response": "response"
+    "bonus": "",
+    "response": "itch.io"
   },
   {
-    "type": "INPUT MUSIC",
-    "theme": "LANGUES",
-    "points": 2,
-    "label": "label",
-    "hint": "hint",
-    "image": "url_image",
-    "url": "music_url",
+    "type": "INPUT",
+    "theme": "DRAPEAU DES PAYS",
+    "points": 1,
+    "label": "Drapeau de quel pays ?",
+    "image": "https://www.worldatlas.com/r/w728-h425-c728x425/upload/8f/1e/7c/shutterstock-478553629.jpg",
     "propositions": [
       {
-        "label": "label1"
+        "label": "Japon"
       },
       {
-        "label": "label2"
+        "label": "Corée du Nord"
       },
       {
-        "label": "label3"
+        "label": "Corée du Sud"
       },
       {
-        "label": "label4"
+        "label": "Malaisie"
       }
     ],
-    "bonus": "bonus",
-    "response": "response"
+    "bonus": "",
+    "response": "Corée du Sud"
   },
   {
-    "type": "INPUT MUSIC",
-    "theme": "LANGUES",
-    "points": 2,
-    "label": "label",
-    "hint": "hint",
-    "image": "url_image",
-    "url": "music_url",
+    "type": "INPUT",
+    "theme": "DRAPEAU DES PAYS",
+    "points": 1,
+    "label": "Drapeau de quel pays ?",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Flag_of_Egypt.svg/1200px-Flag_of_Egypt.svg.png",
     "propositions": [
       {
-        "label": "label1"
+        "label": "Egypte"
       },
       {
-        "label": "label2"
+        "label": "Arabie Saoudite"
       },
       {
-        "label": "label3"
+        "label": "Turquie"
       },
       {
-        "label": "label4"
+        "label": "Ouzbékistan"
       }
     ],
-    "bonus": "bonus",
-    "response": "response"
+    "bonus": "",
+    "response": "Egypte"
   },
   {
-    "type": "INPUT MUSIC",
-    "theme": "LANGUES",
+    "type": "INPUT",
+    "theme": "DRAPEAU DES PAYS",
     "points": 2,
-    "label": "label",
-    "hint": "hint",
-    "image": "url_image",
-    "url": "music_url",
+    "label": "Drapeau de quel pays ?",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Flag_of_Guatemala.svg/800px-Flag_of_Guatemala.svg.png",
     "propositions": [
       {
-        "label": "label1"
+        "label": "Haiti"
       },
       {
-        "label": "label2"
+        "label": "Grèce"
       },
       {
-        "label": "label3"
+        "label": "Equateur"
       },
       {
-        "label": "label4"
+        "label": "Guatemala"
       }
     ],
-    "bonus": "bonus",
-    "response": "response"
+    "bonus": "Signification des couleurs ? Bleu : représente le fait que le Guatemala est situé entre 2 océans. Blanc : paix et pureté",
+    "response": "Guatemala"
   },
   {
-    "type": "INPUT MUSIC",
-    "theme": "LANGUES",
+    "type": "INPUT",
+    "theme": "DRAPEAU DES PAYS",
     "points": 2,
-    "label": "label",
-    "hint": "hint",
-    "image": "url_image",
-    "url": "music_url",
+    "label": "Drapeau de quel pays ?",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Flag_of_Bhutan.svg/800px-Flag_of_Bhutan.svg.png",
     "propositions": [
       {
-        "label": "label1"
+        "label": "Nepal"
       },
       {
-        "label": "label2"
+        "label": "Bhoutan"
       },
       {
-        "label": "label3"
+        "label": "Vietnam"
       },
       {
-        "label": "label4"
+        "label": "Tibet"
       }
     ],
-    "bonus": "bonus",
-    "response": "response"
+    "bonus": "Que tient le dragon entre ses griffes ? Des perles représentant la richesse",
+    "response": "Bhoutan"
   },
   {
-    "type": "INPUT MUSIC",
-    "theme": "LANGUES",
-    "points": 2,
-    "label": "label",
-    "hint": "hint",
-    "image": "url_image",
-    "url": "music_url",
-    "propositions": [
-      {
-        "label": "label1"
-      },
-      {
-        "label": "label2"
-      },
-      {
-        "label": "label3"
-      },
-      {
-        "label": "label4"
-      }
-    ],
-    "bonus": "bonus",
-    "response": "response"
+    "type": "INPUT",
+    "theme": "DRAPEAU DES PAYS",
+    "points": 4,
+    "label": "Décrivez le drapeau des Seychelles",
+    "hint": "5 couleurs attendues + forme",
+    "bonus": "Quelle est la capitale des Seychelles ? Victoria",
+    "response": "bleu, jaune, rouge, blanc, vert, triangles"
   },
   {
-    "type": "INPUT MUSIC",
-    "theme": "LANGUES",
-    "points": 2,
-    "label": "label",
-    "hint": "hint",
-    "image": "url_image",
-    "url": "music_url",
+    "type": "INPUT",
+    "theme": "AVIATION",
+    "points": 1,
+    "label": "Que désigne le mot \"fret\" ?",
     "propositions": [
       {
-        "label": "label1"
+        "label": "Le transport de substances hautement toxiques"
       },
       {
-        "label": "label2"
+        "label": "Le transport de marchandises"
       },
       {
-        "label": "label3"
+        "label": "Le fait de voyager clandestinement dans la soute d'un avion"
       },
       {
-        "label": "label4"
+        "label": "Final Rétribution Émise Tantôt"
       }
     ],
-    "bonus": "bonus",
-    "response": "response"
+    "bonus": "",
+    "response": "Le transport de marchandises"
   },
   {
-    "type": "INPUT MUSIC",
-    "theme": "LANGUES",
-    "points": 2,
-    "label": "label",
-    "hint": "hint",
-    "image": "url_image",
-    "url": "music_url",
+    "type": "INPUT",
+    "theme": "AVIATION",
+    "points": 1,
+    "label": "Qu'est-ce comme avion ?",
+    "hint": "c'est pas écrit dessus cette fois",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Concorde_1_94-9-5_kix_%28cropped%29.jpg/1920px-Concorde_1_94-9-5_kix_%28cropped%29.jpg",
     "propositions": [
       {
-        "label": "label1"
+        "label": "Boeing 707"
       },
       {
-        "label": "label2"
+        "label": "Douglas DC-4"
       },
       {
-        "label": "label3"
+        "label": "Concorde"
       },
       {
-        "label": "label4"
+        "label": "Tupolev Tu-144"
       }
     ],
-    "bonus": "bonus",
-    "response": "response"
+    "bonus": "",
+    "response": "Concorde"
   },
   {
-    "type": "INPUT MUSIC",
-    "theme": "LANGUES",
+    "type": "INPUT",
+    "theme": "AVIATION",
     "points": 2,
-    "label": "label",
-    "hint": "hint",
-    "image": "url_image",
-    "url": "music_url",
+    "label": "Combien de temps dure le vol le plus long ?",
     "propositions": [
       {
-        "label": "label1"
+        "label": "14h07"
       },
       {
-        "label": "label2"
+        "label": "14h12"
       },
       {
-        "label": "label3"
+        "label": "15h57"
       },
       {
-        "label": "label4"
+        "label": "20h33"
       }
     ],
-    "bonus": "bonus",
-    "response": "response"
+    "bonus": "Il part de Paris pour arriver où ? Tahiti",
+    "response": "15h57"
   },
   {
-    "type": "INPUT MUSIC",
-    "theme": "LANGUES",
+    "type": "INPUT",
+    "theme": "AVIATION",
     "points": 2,
-    "label": "label",
-    "hint": "hint",
-    "image": "url_image",
-    "url": "music_url",
+    "label": "En regardant la photo, dans quel type d'avion je suis ?",
+    "image": "https://www.neozone.org/blog/wp-content/uploads/2019/06/cockpit-a320-lego.jpg",
     "propositions": [
       {
-        "label": "label1"
+        "label": "Embraer"
       },
       {
-        "label": "label2"
+        "label": "Boeing"
       },
       {
-        "label": "label3"
+        "label": "Saab"
       },
       {
-        "label": "label4"
+        "label": "Airbus"
       }
     ],
-    "bonus": "bonus",
-    "response": "response"
+    "bonus": "",
+    "response": "Airbus"
   },
   {
-    "type": "INPUT MUSIC",
-    "theme": "LANGUES",
-    "points": 2,
-    "label": "label",
-    "hint": "hint",
-    "image": "url_image",
-    "url": "music_url",
-    "propositions": [
-      {
-        "label": "label1"
-      },
-      {
-        "label": "label2"
-      },
-      {
-        "label": "label3"
-      },
-      {
-        "label": "label4"
-      }
-    ],
-    "bonus": "bonus",
-    "response": "response"
+    "type": "INPUT",
+    "theme": "AVIATION",
+    "points": 4,
+    "label": "A quoi correspond l'annotation 18 ?",
+    "image": "http://wiki.flightgear.org/images/5/5f/Citation_PFD.png",
+    "bonus": "a quoi correspondent le 9 et 13 ? Vitesse du vent et direction & altitude",
+    "response": "Vertical Speed Indicator"
   },
   {
-    "type": "INPUT MUSIC",
-    "theme": "LANGUES",
+    "type": "MUSIC",
+    "theme": "BLINDTEST",
     "points": 2,
-    "label": "label",
-    "hint": "hint",
-    "image": "url_image",
-    "url": "music_url",
-    "propositions": [
-      {
-        "label": "label1"
-      },
-      {
-        "label": "label2"
-      },
-      {
-        "label": "label3"
-      },
-      {
-        "label": "label4"
-      }
-    ],
-    "bonus": "bonus",
-    "response": "response"
+    "label": "Reconnaissez la musique",
+    "url": "https://www.youtube.com/watch?v=iFaKc8Bvk4Y",
+    "bonus": "",
+    "response": "Twenty One Pilots ~ Level of Concern"
   },
   {
-    "type": "INPUT MUSIC",
-    "theme": "LANGUES",
+    "type": "MUSIC",
+    "theme": "BLINDTEST",
     "points": 2,
-    "label": "label",
-    "hint": "hint",
-    "image": "url_image",
-    "url": "music_url",
+    "label": "Reconnaissez la musique",
+    "url": "https://www.youtube.com/watch?v=dX3k_QDnzHE&list=PLfT09cdpUEa_QHs2B-_QYgNa0vQGkR8X2&index=41",
+    "bonus": "",
+    "response": "M83 'Midnight City'"
+  },
+  {
+    "type": "MUSIC",
+    "theme": "BLINDTEST",
+    "points": 2,
+    "label": "Reconnaissez la musique",
+    "url": "https://www.youtube.com/watch?v=iywaBOMvYLI",
+    "bonus": "",
+    "response": "System Of A Down - Toxicity"
+  },
+  {
+    "type": "MUSIC",
+    "theme": "BLINDTEST",
+    "points": 2,
+    "label": "Reconnaissez la musique",
+    "url": "https://www.youtube.com/watch?v=gADgM89skZQ",
+    "bonus": "",
+    "response": "Tones and I - Dance Monkey"
+  },
+  {
+    "type": "MUSIC",
+    "theme": "BLINDTEST",
+    "points": 2,
+    "label": "Reconnaissez la musique",
+    "url": "https://www.youtube.com/watch?v=lTx3G6h2xyA",
+    "bonus": "",
+    "response": "Madeon - Pop Culture"
+  },
+  {
+    "type": "INPUT",
+    "theme": "NAHEULBEUK",
+    "points": 1,
+    "label": "De combien de personnes est composé le groupe de départ ?",
+    "hint": "Ekip",
     "propositions": [
       {
-        "label": "label1"
+        "label": "5"
       },
       {
-        "label": "label2"
+        "label": "6"
       },
       {
-        "label": "label3"
+        "label": "7"
       },
       {
-        "label": "label4"
+        "label": "8"
       }
     ],
-    "bonus": "bonus",
-    "response": "response"
+    "bonus": "",
+    "response": "7"
+  },
+  {
+    "type": "INPUT",
+    "theme": "NAHEULBEUK",
+    "points": 1,
+    "label": "L'elfe du groupe est",
+    "image": "https://s2.qwant.com/thumbr/0x380/d/b/069977f8b35e7b9a611b9aed2f7d92f919bda929a63dedc0356f497684280c/elfe-portrait01-0ae60.jpg?u=http%3A%2F%2Fencyclopedie.naheulbeuk.com%2Flocal%2Fcache-vignettes%2FL442xH563%2Felfe-portrait01-0ae60.jpg%3F1484131673&q=0&b=1&p=0&a=1",
+    "propositions": [
+      {
+        "label": "Pénélope"
+      },
+      {
+        "label": "Une salope"
+      },
+      {
+        "label": "Nyctalope"
+      },
+      {
+        "label": "Fils de pote"
+      }
+    ],
+    "bonus": "",
+    "response": "Nyctalope"
+  },
+  {
+    "type": "INPUT",
+    "theme": "NAHEULBEUK",
+    "points": 2,
+    "label": "Dans quoi doivent être enroulées les statuettes pour que la prophétie s'accomplisse ?",
+    "propositions": [
+      {
+        "label": "Jambon"
+      },
+      {
+        "label": "Mie de pain"
+      },
+      {
+        "label": "Tortillas"
+      },
+      {
+        "label": "Linge blanc"
+      }
+    ],
+    "bonus": "De quelle statuette sont-ils à la recherche dans la saison 1 ? Statuette de Gladeulfeurha",
+    "response": "Jambon"
+  },
+  {
+    "type": "INPUT",
+    "theme": "NAHEULBEUK",
+    "points": 2,
+    "label": "Quelle est la spécialité de la taverne de Naheulbeuk ?",
+    "propositions": [
+      {
+        "label": "Sanglier au whisky"
+      },
+      {
+        "label": "Gobelin farci"
+      },
+      {
+        "label": "Ours à la bière"
+      },
+      {
+        "label": "Tagazok"
+      }
+    ],
+    "bonus": "comment arrivent-ils à la taverne ? Troll leur donne une carte",
+    "response": "Ours à la bière"
+  },
+  {
+    "type": "INPUT",
+    "theme": "NAHEULBEUK",
+    "points": 4,
+    "label": "Dans quelle série audio le nain fait-il une apparition ?",
+    "hint": "caméo",
+    "bonus": "Quel événement est la cause de la téléportation du nain ? Nain est tué par une liche avant de ressuciter",
+    "response": "Les aventuriers du Survivaure"
+  },
+  {
+    "type": "MUSIC",
+    "theme": "COVERS",
+    "points": 2,
+    "label": "Reconnaissez la musique originale",
+    "hint": "GTA Vice City",
+    "url": "../assets/questions/cover-toto-africa.mp3",
+    "bonus": "",
+    "response": "Toto - Africa"
+  },
+  {
+    "type": "MUSIC",
+    "theme": "COVERS",
+    "points": 2,
+    "label": "Reconnaissez la musique originale",
+    "hint": "50k abonnés sur YouTube, j'ai cru qu'ils étaient bons...",
+    "url": "../assets/questions/cover-evanescence.mp3",
+    "bonus": "",
+    "response": "Evanescence - Bring Me To Life"
+  },
+  {
+    "type": "MUSIC",
+    "theme": "COVERS",
+    "points": 2,
+    "label": "Reconnaissez la musique originale",
+    "url": "../assets/questions/cover-bag-guy.mp3",
+    "bonus": "",
+    "response": "Billie Eilish - Bad Guy"
+  },
+  {
+    "type": "MUSIC",
+    "theme": "COVERS",
+    "points": 2,
+    "label": "Reconnaissez la musique originale",
+    "url": "../assets/questions/cover-despacito.mp3",
+    "bonus": "",
+    "response": "Despacito - Luis Fonsi"
+  },
+  {
+    "type": "MUSIC",
+    "theme": "COVERS",
+    "points": 2,
+    "label": "Reconnaissez la musique originale",
+    "url": "../assets/questions/cover-jason-mraz.mp3",
+    "bonus": "",
+    "response": "Jason Mraz - I'm Yours"
   }
 ]
