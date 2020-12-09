@@ -121,7 +121,7 @@ const addLeaderboard = async (players) => {
         if (messages.size <= 0) {
           const fields = players.map((player) => {
             return {
-              name: `${player.username} - ${player.id}`,
+              name: `${player.username} #&# ${player.id}`,
               value: `${player.score} points`,
             };
           });
@@ -139,7 +139,7 @@ const addLeaderboard = async (players) => {
 
           // Joueurs dans le classement actuel
           let current = msg.embeds[0].fields.map((field) => {
-            const [username, id] = field.name.split('-');
+            const [username, id] = field.name.split('#&#');
             const score = field.value.split(' ')[0].trim();
 
             return {
@@ -158,7 +158,7 @@ const addLeaderboard = async (players) => {
                 if (curr.id === c.id) {
                   return {
                     ...curr,
-                    score: curr.score + isPlayerAlreadyInLeaderboard.score,
+                    score: c.score + isPlayerAlreadyInLeaderboard.score,
                   }
                 }
                 return curr;
@@ -173,7 +173,7 @@ const addLeaderboard = async (players) => {
 
           const newFields = finalLeaderboard.map((p) => {
             return {
-              name: `${p.username} - ${p.id}`,
+              name: `${p.username} #&# ${p.id}`,
               value: `${p.score} points`,
             };
           });

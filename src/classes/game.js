@@ -351,6 +351,7 @@ module.exports = class Game {
         score: p.score,
       };
     });
+
     main.addLeaderboard(resultPlayers);
   };
 
