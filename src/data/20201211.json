@@ -863,7 +863,7 @@
     "points": 2,
     "label": "De quel jeu est tiré cette musique ?",
     "hint": "offre en or, no noob",
-    "url": "https://www.youtube.com/watch?v=axboKEGaP-E",
+    "url": "../assets/questions/inde-dofus.mp3",
     "bonus": "",
     "response": "Dofus 1.29"
   },
