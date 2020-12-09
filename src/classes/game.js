@@ -224,7 +224,7 @@ module.exports = class Game {
     const embedQuestion = {
       color: questionColors.INPUT,
       author: {
-        name: `(${this.activeQuestionIndex + 1} / ${this.questions.length})  +${activeQuestion.points || 1} points`,
+        name: `(${this.activeQuestionIndex + 1} / ${this.questions.length}) ${activeQuestion.theme}  +${typeof activeQuestion.points === 'undefined' ? 1 : activeQuestion.points} points`,
       },
       title: activeQuestion.label,
       ...(activeQuestion.hint && { description: `Indice : ${activeQuestion.hint}` }),
@@ -411,7 +411,7 @@ module.exports = class Game {
       // Le joueur a bien répondu
       // Recherche du membre
       const player = this.players.find((player) => player.userId === this.isInBuzz);
-      const pointsEarned = this.questions[this.activeQuestionIndex].points || 1;
+      const pointsEarned = typeof this.questions[this.activeQuestionIndex].points === 'undefined' ? 1 : this.questions[this.activeQuestionIndex].points;
       player.incrementScore(pointsEarned);
 
       this.textChannel.send(`<@${this.isInBuzz}> a trouvé la bonne réponse ! +${pointsEarned} points !`);
