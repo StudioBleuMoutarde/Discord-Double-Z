@@ -603,7 +603,7 @@
     "points": 2,
     "label": "Que fait la personne pour avoir ce bruit ?",
     "hint": "ASMR",
-    "url": "",
+    "url": "../assets/questions/bruit-asmr-raser.mp3",
     "propositions": [
       {
         "label": "Se lave les mains"
@@ -865,7 +865,7 @@
     "hint": "offre en or, no noob",
     "url": "https://www.youtube.com/watch?v=axboKEGaP-E",
     "bonus": "",
-    "response": "Dofus 1.26"
+    "response": "Dofus 1.29"
   },
   {
     "type": "INPUT",
@@ -1119,18 +1119,18 @@
     "theme": "BLINDTEST",
     "points": 2,
     "label": "Reconnaissez la musique",
-    "url": "https://www.youtube.com/watch?v=iFaKc8Bvk4Y",
+    "url": "https://www.youtube.com/watch?v=YJVmu6yttiw",
     "bonus": "",
-    "response": "Twenty One Pilots ~ Level of Concern"
+    "response": "Skrillex - Bangarang"
   },
   {
     "type": "MUSIC",
     "theme": "BLINDTEST",
     "points": 2,
     "label": "Reconnaissez la musique",
-    "url": "https://www.youtube.com/watch?v=dX3k_QDnzHE&list=PLfT09cdpUEa_QHs2B-_QYgNa0vQGkR8X2&index=41",
+    "url": "https://www.youtube.com/watch?v=gGdGFtwCNBE",
     "bonus": "",
-    "response": "M83 'Midnight City'"
+    "response": "The Killers - Mr Brightside"
   },
   {
     "type": "MUSIC",
@@ -1283,9 +1283,9 @@
     "theme": "COVERS",
     "points": 2,
     "label": "Reconnaissez la musique originale",
-    "url": "../assets/questions/cover-bag-guy.mp3",
+    "url": "../assets/questions/cover-bad-guy.mp3",
     "bonus": "",
-    "response": "Billie Eilish - Bad Guy"
+    "response": "Bilie Eilish - Bad Guy"
   },
   {
     "type": "MUSIC",
