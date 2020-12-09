@@ -3,7 +3,7 @@ const path = require('path');
 
 const Player = require('./player');
 const main = require('../main');
-const questions = require('../data/questions.json');
+const questions = require('../data/20201211.json');
 
 const questionColors = require('../enums/question-colors');
 const QCMValues = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
@@ -200,7 +200,7 @@ module.exports = class Game {
           .play(
             path.join(__dirname, activeQuestion.url),
             {
-              volume: 0.95,
+              volume: 1.1,
             }
           )
           .on('error', (error) => {
@@ -390,7 +390,7 @@ module.exports = class Game {
             .play(
               buzzerSoundPath,
               {
-                volume: 1.15,
+                volume: 0.8,
               }
             )
             .on('error', (error) => {
