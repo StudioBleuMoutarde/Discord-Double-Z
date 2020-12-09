@@ -38,9 +38,9 @@
     "theme": "TEST",
     "points": 0,
     "label": "Qui parle ?",
-    "url": "../assets/questions/test-kad-olivier.mp3",
+    "url": "../assets/questions/test-rebillet.mp3",
     "bonus": "",
-    "response": "Kad & Olivier"
+    "response": "Marc Rebillet"
   },
   {
     "type": "INPUT",
